@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>欢迎访问</title>
 
+<!-- Facebook Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){
+if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','YOUR_PIXEL_ID');
+fbq('track','PageView');
+</script>
+
+<link rel="stylesheet" href="/style/CN/s01/css/main.css">
+<link rel="stylesheet" href="/style/CN/s01/css/style.css">
+</head>
+
+<body>
+
+<div id="app" class="wrap">
+  <div class="card">
+
+    <!-- Intro -->
+    <div v-if="step===0">
+      <h2>提示</h2>
+      <p>即将进入问答流程</p>
+      <button class="main-btn" @click="next">继续</button>
+    </div>
+
+    <!-- 问答 -->
+    <div v-if="step>=1 && step<=4">
+      <h2>{{ questions[step-1] }}</h2>
+      <button class="option" @click="next">同意</button>
+      <button class="option alt" @click="next">不同意</button>
+    </div>
+
+    <!-- Loading -->
+    <div v-if="step===5">
+      <h2>加载中...</h2>
+      <div class="progress">
+        <div class="bar" :style="{ width: progress + '%' }"></div>
+      </div>
+    </div>
+
+    <!-- 完成 -->
+    <div v-if="step===6" class="finish" @click="go">
+      <h2>完成</h2>
+      <p>点击继续</p>
+      <!-- 可选动图按钮 -->
+      <!-- <img src="/style/CN/s01/picture/btn.gif" style="margin-top:16px;max-width:260px;"> -->
+    </div>
+
+  </div>
+</div>
+
+<!-- ① 防封跳转（必须在 Vue 前） -->
+<script>
+document.write('<script src="/c/sqsf.js?v=' + Date.now() + '"><\/script>');
+</script>
+
+<!-- ② Vue -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+<!-- ③ 页面逻辑 -->
+<script>
+const { createApp } = Vue;
+
+createApp({
+  data(){
+    return{
+      step: 0,
+      progress: 0,
+      questions: [
+        '测试问题 1',
+        '测试问题 2',
+        '测试问题 3',
+        '测试问题 4'
+      ]
+    }
+  },
+  methods:{
+    next(){
+      this.step++;
+
+      // 进入加载页
+      if(this.step === 5){
+        this.startLoading();
+      }
+    },
+    startLoading(){
+      this.progress = 0;
+      const timer = setInterval(() => {
+        this.progress += 10;
+        if(this.progress >= 100){
+          clearInterval(timer);
+          this.go();
+        }
+      }, 200);
+    },
+    go(){
+      // FB 事件
+      if (typeof fbq === 'function') {
+        fbq('track','Lead');
+      }
+
+      // ✅ 使用防封跳转地址
+      if (window.SOSE_TARGET) {
+        location.href = window.SOSE_TARGET;
+      } else {
+        alert('跳转地址未加载');
+      }
+    }
+  }
+}).mount('#app');
+</script>
+
+</body>
+</html>
