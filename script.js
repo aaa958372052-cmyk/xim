@@ -1,47 +1,41 @@
-document.addEventListener('DOMContentLoaded', () => {
+let currentPage = 0;
+const pages = document.querySelectorAll('.page');
+const steps = document.querySelectorAll('.step');
+const stepsBar = document.getElementById('stepsBar');
 
-  let currentPage = 0;
-  const pages = document.querySelectorAll('.page');
-  const steps = document.querySelectorAll('.step');
-  const stepsBar = document.getElementById('stepsBar');
+function showPage(i){
+  pages.forEach(p=>p.classList.remove('active'));
+  pages[i].classList.add('active');
+}
 
-  pages.forEach(p => p.classList.remove('active'));
-  pages[0].classList.add('active');
+function nextPage(){
+  currentPage++;
+  showPage(currentPage);
+}
 
-  window.nextPage = function () {
-    pages[currentPage].classList.remove('active');
+function startSelection(){
+  nextPage();
+  stepsBar.style.display = 'flex';
+}
+
+function selectOption(el){
+  el.parentElement.querySelectorAll('.option')
+    .forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+
+  setTimeout(()=>{
     currentPage++;
-    pages[currentPage].classList.add('active');
-  };
+    showPage(currentPage);
 
-  window.startSelection = function () {
-    nextPage();
-    stepsBar.style.display = 'flex';
-  };
-
-  window.selectOption = function (el) {
-    const parent = el.parentElement;
-    parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-
-    setTimeout(() => {
-      pages[currentPage].classList.remove('active');
-      currentPage++;
-      pages[currentPage].classList.add('active');
-
-      const stepIdx = pages[currentPage].dataset.step;
-      if (stepIdx !== undefined) {
-        steps.forEach(s => s.classList.remove('active'));
-        steps[stepIdx].classList.add('active');
-      } else {
-        stepsBar.style.display = 'none';
-        const bar = document.getElementById('progressBar');
-        if (bar) {
-          setTimeout(() => bar.style.width = '100%', 100);
-          setTimeout(() => nextPage(), 2600);
-        }
-      }
-    }, 350);
-  };
-
-});
+    const step = pages[currentPage].dataset.step;
+    if(step!==undefined){
+      steps.forEach(s=>s.classList.remove('active'));
+      steps[step].classList.add('active');
+    }else{
+      stepsBar.style.display='none';
+      const bar=document.getElementById('progressBar');
+      bar.style.width='100%';
+      setTimeout(()=>nextPage(),2600);
+    }
+  },400);
+}
