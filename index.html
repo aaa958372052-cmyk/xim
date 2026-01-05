@@ -1,128 +1,264 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>提示</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>测试问答</title>
 
-<!-- Facebook Pixel（你自己换 ID） -->
-<script>
-!function(f,b,e,v,n,t,s){
-if(f.fbq)return;n=f.fbq=function(){
-n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)
-}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','YOUR_PIXEL_ID');
-fbq('track','PageView');
-</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
+body{overflow:hidden}
 
-<link rel="stylesheet" href="./style/CN/s01/css/main.css">
-<link rel="stylesheet" href="./style/CN/s01/css/style.css">
+/* ===== 背景滚动 ===== */
+.page{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  background:#000;
+}
+.bg-scroll{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:220%;
+  background:url("images/bg.jpg") center top/cover no-repeat;
+  animation:bgMove 12s linear infinite; /* 🔥 速度已加快 */
+}
+@keyframes bgMove{
+  from{transform:translateY(0)}
+  to{transform:translateY(-55%)}
+}
+
+/* ===== 卡片 ===== */
+.card{
+  position:absolute;
+  top:6%;
+  bottom:6%;
+  left:50%;
+  transform:translateX(-50%);
+  width:72%;
+  max-width:720px;
+  background:rgba(255,255,255,.88);
+  border-radius:22px;
+  padding:40px 30px;
+  display:flex;
+  flex-direction:column;
+  z-index:2;
+  box-shadow:0 30px 60px rgba(0,0,0,.35);
+}
+
+/* ===== 动画 ===== */
+.fade{
+  animation:fade .35s ease;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+h1{
+  font-size:30px;
+  text-align:center;
+  margin-bottom:18px;
+}
+p.sub{
+  text-align:center;
+  opacity:.75;
+  margin-bottom:40px;
+}
+
+/* ===== 按钮 ===== */
+.btn-group{
+  margin-top:auto;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+button{
+  min-width:140px;
+  height:46px;
+  border-radius:999px;
+  border:none;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+}
+.btn-red{
+  background:#000;
+  color:#fff;
+}
+.btn-white{
+  background:#fff;
+  border:1px solid #ddd;
+}
+
+/* ===== 进度条 ===== */
+.progress{
+  width:60%;
+  height:8px;
+  background:#e0e0e0;
+  border-radius:99px;
+  overflow:hidden;
+  margin:30px auto 0;
+}
+.bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#ff3b3b,#ff8c00);
+  transition:width .4s ease;
+}
+
+/* ===== 选择页 ===== */
+.select-wrap{
+  display:flex;
+  gap:30px;
+  margin-top:30px;
+  flex:1;
+}
+.left{
+  width:120px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.tab{
+  background:#fff;
+  border-radius:999px;
+  padding:14px;
+  text-align:center;
+  font-weight:600;
+}
+.tab.active{
+  outline:3px solid #ff5a5a;
+}
+.right{
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+.pic{
+  border-radius:16px;
+  overflow:hidden;
+}
+.pic img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ===== 加载 ===== */
+.loading{
+  text-align:center;
+  margin-top:auto;
+}
+</style>
 </head>
 
 <body>
-
-<div id="app" class="page">
-
-  <!-- 背景滚动层 -->
+<div class="page">
   <div class="bg-scroll"></div>
 
-  <!-- 灰色遮罩 -->
-  <div class="mask"></div>
-
-  <!-- 前景卡片 -->
-  <transition name="fade-slide" mode="out-in">
-    <div class="card" v-if="step===0">
-      <h1>温馨提醒</h1>
-      <p class="sub">
-        你即将看到当地寻找约会或兼职的女孩，
-        您能否保证不泄露女孩隐私？
-      </p>
-      <p class="sub small">
-        约会之前，我们需要问几个简短问题？
-      </p>
-      <div class="btn-group center">
-        <button class="btn agree" @click="next">好的</button>
-        <button class="btn refuse" @click="next">拒绝</button>
-      </div>
-    </div>
-  </transition>
-
+  <div class="card fade" id="card">
+    <!-- 内容由 JS 控制 -->
+  </div>
 </div>
-
-  <!-- 问答页 -->
-  <transition name="fade-slide" mode="out-in">
-    <div class="card" v-if="step>=1 && step<=4" :key="step">
-      <h1>{{ questions[step-1] }}</h1>
-      <div class="btn-group">
-        <button class="btn agree" @click="next">同意</button>
-        <button class="btn refuse" @click="next">不同意</button>
-      </div>
-    </div>
-  </transition>
-
-  <!-- 加载 -->
-  <transition name="fade-slide" mode="out-in">
-    <div class="card" v-if="step===5" key="loading">
-      <h1>加载中...</h1>
-      <div class="progress">
-        <div class="bar" :style="{width: progress + '%'}"></div>
-      </div>
-    </div>
-  </transition>
-
-</div>
-
-<!-- 防封跳转 -->
-<script src="./c/sqsf.js"></script>
-
-<!-- Vue -->
-<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 
 <script>
-const { createApp } = Vue;
+let step = 0;
+const card = document.getElementById("card");
 
-createApp({
-  data(){
-    return{
-      step:0,
-      progress:0,
-      questions:[
-        '你是否同意继续？',
-        '是否已满 25 岁？',
-        '是否接受相关条款？',
-        '是否确认进入下一步？'
-      ]
-    }
-  },
-  methods:{
-    next(){
-      this.step++;
-      if(this.step===5){
-        this.startLoading();
-      }
-    },
-    startLoading(){
-      const t = setInterval(()=>{
-        this.progress += 8;
-        if(this.progress>=100){
-          clearInterval(t);
-          this.go();
-        }
-      },120);
-    },
-    go(){
-      if(typeof fbq==='function'){
-        fbq('track','Lead');
-      }
-      location.href = window.SQSF_TARGET || '#';
-    }
+function render(){
+  card.className="card fade";
+
+  if(step===0){
+    card.innerHTML=`
+      <h1>温馨提醒</h1>
+      <p class="sub">请认真回答以下问题</p>
+      <div class="btn-group">
+        <button class="btn-red" onclick="next()">好的</button>
+        <button class="btn-white">拒绝</button>
+      </div>
+    `;
   }
-}).mount('#app');
-</script>
 
+  if(step>=1 && step<=3){
+    const qs=[
+      "你同意对女性的身份保密吗？",
+      "本网站仅用于约会，你能接受吗？",
+      "发生关系时是否同意使用避孕措施？"
+    ];
+    card.innerHTML=`
+      <h1>${step}. ${qs[step-1]}</h1>
+      <div class="btn-group">
+        <button class="btn-red" onclick="next()">同意</button>
+        <button class="btn-white" onclick="next()">不同意</button>
+      </div>
+      <div class="progress"><div class="bar" style="width:${step*30}%"></div></div>
+    `;
+  }
+
+  if(step===4){
+    card.innerHTML=`
+      <h1>进入挑选环节</h1>
+      <p class="sub">系统分析中...</p>
+      <div class="progress"><div class="bar" style="width:55%"></div></div>
+    `;
+    setTimeout(()=>{step=5;render()},1200);
+  }
+
+  if(step===5){
+    card.innerHTML=`
+      <h1>什么样的胸部使你兴奋？</h1>
+      <div class="select-wrap">
+        <div class="left">
+          <div class="tab active">胸部</div>
+          <div class="tab">年龄</div>
+          <div class="tab">臀部</div>
+          <div class="tab">姿势</div>
+        </div>
+        <div class="right">
+          <div class="pic"><img src="images/c1.jpg"></div>
+          <div class="pic"><img src="images/c2.jpg"></div>
+          <div class="pic"><img src="images/c3.jpg"></div>
+          <div class="pic"><img src="images/c4.jpg"></div>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn-red" onclick="next()">继续</button>
+      </div>
+    `;
+  }
+
+  if(step===6){
+    card.innerHTML=`
+      <h1>加载中...</h1>
+      <div class="progress"><div class="bar" style="width:70%"></div></div>
+    `;
+    setTimeout(()=>{step=7;render()},1400);
+  }
+
+  if(step===7){
+    card.innerHTML=`
+      <h1>恭喜！</h1>
+      <p class="sub">
+        您已获得访问权限<br><br>
+        点击下方按钮继续
+      </p>
+      <div class="btn-group">
+        <button class="btn-red">立即联系她们</button>
+      </div>
+    `;
+  }
+}
+
+function next(){
+  step++;
+  render();
+}
+render();
+</script>
 </body>
 </html>
