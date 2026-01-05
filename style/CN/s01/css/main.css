@@ -102,3 +102,15 @@ body{
   from{opacity:0;transform:translateY(10px)}
   to{opacity:1;transform:none}
 }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: url("../images/bg.jpg") no-repeat center top;
+  background-size: cover;
+}
