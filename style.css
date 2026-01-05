@@ -7,7 +7,7 @@ html, body {
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
 
-  background-image: url("/style/CN/s01/images/a9f847bbe2f60d34825643e65d7d2c35.jpg");
+  background-image: url("images/bg.jpg");
   background-repeat: no-repeat;
 
   /* 原版精确定位 */
