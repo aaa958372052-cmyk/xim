@@ -1,46 +1,55 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
-  min-height: 220vh;
-  background: #555;
+  background: #6b6b6b;          /* 原版左右灰 */
+  overflow-x: hidden;
 }
 
-/* ===== 背景结构（原版逻辑）===== */
+/* 灰色背景容器 */
 .bg-wrap {
   position: fixed;
   inset: 0;
-  overflow: hidden;
-  z-index: 0;
+  display: flex;
+  justify-content: center;
+  z-index: -10;
 }
 
-.bg-img {
-  position: absolute;
-  inset: 0;
-  background: url("images/bg.jpg") center top / cover no-repeat;
-  transform: scale(1.05);
+/* 中央滚动背景（像素级） */
+.bg-scroll {
+  width: 414px;                 /* ✅ 原版 ≈ iPhone 宽 */
+  height: 220%;                 /* 比 200% 稍大，防断层 */
+  background-image: url("../images/bg.jpg");
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: cover;
+  animation: bgMove 8.5s linear infinite; /* ✅ 原版速度 */
 }
 
-/* 灰色模糊遮罩 */
-.bg-mask {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.45);
-  backdrop-filter: blur(18px);
-  z-index: 1;
+/* 背景滚动动画 */
+@keyframes bgMove {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-55%); }
 }
-
 /* ===== 主体 ===== */
 .wrapper {
   position: relative;
-  z-index: 2;
-  width: 92%;
-  max-width: 860px;
-  margin: 0 auto;
-  padding-top: 140px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 58px;   /* 原版顶部距离 */
+  z-index: 5;
+}
+
+.card {
+  width: 344px;        /* 原版视觉宽度 */
+  background: rgba(255,255,255,0.97);
+  border-radius: 24px; /* 原版更圆 */
+  padding: 38px 28px 42px;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.35),
+    0 30px 80px rgba(0,0,0,.45);
 }
 
 /* ===== 左侧步骤条 ===== */
@@ -76,51 +85,43 @@ body {
   border-right: none;
 }
 
-/* ===== 白卡 ===== */
-.card {
-  background: rgba(255,255,255,.96);
-  border-radius: 26px;
-  padding: 60px 50px;
-  box-shadow: 0 30px 80px rgba(0,0,0,.45);
-  text-align: center;
-}
-
-.page { display: none; }
-.page.active { display: block; }
-
 /* ===== 文本 ===== */
 h1 {
-  font-size: 26px;
+  font-size: 20px;
+  font-weight: 600;
   color: #111;
-  margin-bottom: 22px;
+  margin: 0 0 18px;
 }
 
 .desc {
-  font-size: 16px;
-  color: #555;
-  line-height: 1.7;
-  margin-bottom: 30px;
+  font-size: 15px;
+  color: #444;
+  line-height: 1.55;
+  margin-bottom: 22px;
 }
 
 .sub-desc {
   font-size: 13px;
   color: #999;
-  margin-top: -10px;
-  margin-bottom: 30px;
+  margin-top: -8px;
+  margin-bottom: 28px;
 }
+
 
 /* ===== 按钮 ===== */
 .btns {
   display: flex;
   justify-content: center;
-  gap: 18px;
+  gap: 14px;
 }
 
 .btn {
-  padding: 14px 34px;
+  height: 44px;              /* 原版高度 */
+  padding: 0 28px;
   border-radius: 999px;
   border: none;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -130,61 +131,53 @@ h1 {
 }
 
 .btn-white {
-  background: #eee;
+  background: #f2f2f2;
   color: #333;
-}
-
-.btn-red {
-  background: linear-gradient(90deg,#ff416c,#ff4b2b);
-  color: #fff;
-  font-weight: bold;
-  padding: 18px 60px;
-  font-size: 18px;
 }
 
 /* ===== 图片选择 ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 16px;
-  margin-top: 26px;
+  grid-template-columns: repeat(2, 1fr); /* 原版是 2×2 */
+  gap: 12px;
+  margin-top: 16px;
 }
 
 .option {
   border-radius: 16px;
   overflow: hidden;
-  cursor: pointer;
   border: 3px solid transparent;
-  transition: .2s;
+  transition: all .25s ease;
+  background: #000;
 }
 
 .option img {
   width: 100%;
-  height: 135px;
+  height: 128px;             /* 原版图片高度 */
   object-fit: cover;
   display: block;
 }
 
 .option.selected {
   border-color: #ff3b30;
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 /* ===== 加载条 ===== */
 .bar-container {
   width: 100%;
-  height: 12px;
+  height: 10px;
   background: #eee;
   border-radius: 999px;
-  margin-top: 40px;
   overflow: hidden;
+  margin-top: 32px;
 }
 
 .bar-fill {
   height: 100%;
   width: 0%;
   background: #ff3b30;
-  transition: width 3s linear;
+  transition: width 2.6s linear; /* 原版加载时长 */
 }
 
 /* ===== 结果文本 ===== */
