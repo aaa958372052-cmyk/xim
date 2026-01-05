@@ -20,12 +20,13 @@
   </div>
 
   <div class="card" v-if="step>=1 && step<=4">
-    <h1>{{ questions[step-1] }}</h1>
-    <div class="btn-group">
-      <button class="btn main" @click="next">同意</button>
-      <button class="btn ghost" @click="next">不同意</button>
-    </div>
+  <h1>{{ questions[step-1] }}</h1>
+
+  <div class="btn-group">
+    <button class="btn agree" @click="next">同意</button>
+    <button class="btn refuse" @click="next">不同意</button>
   </div>
+</div>
 
   <div class="card" v-if="step===5">
     <h1>加载中...</h1>
