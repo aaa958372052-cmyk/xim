@@ -1,25 +1,35 @@
-let step = 1;
+const pages = [
+  "p1",
+  "p1b",
+  "p1c",
+  "p1d",
+  "p2",
+  "p3",
+  "p4",
+  "p5",
+  "p6"
+];
 
-document.querySelectorAll('[data-next]').forEach(el=>{
-  el.addEventListener('click', next);
-});
+let index = 0;
 
-function next(){
-  document.getElementById('p'+step).classList.remove('active');
-  step++;
-
-  if(step <= 6){
-    document.getElementById('p'+step).classList.add('active');
-
-    if(step === 6){
-      if(window.fbq) fbq('track','CompleteRegistration');
-      if(window.ttq) ttq.track('CompleteRegistration');
-    }
-  }
+function showPage(i) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(pages[i]).classList.add("active");
 }
 
-document.getElementById('go')?.addEventListener('click', ()=>{
-  if(window.fbq) fbq('track','Lead');
-  if(window.ttq) ttq.track('Lead');
-  location.href = 'YOUR_TARGET_URL';
+document.addEventListener("click", e => {
+  if (e.target.dataset.next !== undefined) {
+    index++;
+    if (index < pages.length) {
+      showPage(index);
+
+      // 进入 loading 自动跳转
+      if (pages[index] === "p5") {
+        setTimeout(() => {
+          index++;
+          showPage(index);
+        }, 2500);
+      }
+    }
+  }
 });
