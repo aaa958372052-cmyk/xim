@@ -27,14 +27,31 @@ fbq('track','PageView');
 
 <div id="app" class="page">
 
-  <!-- 提示页 -->
+  <!-- 背景滚动层 -->
+  <div class="bg-scroll"></div>
+
+  <!-- 灰色遮罩 -->
+  <div class="mask"></div>
+
+  <!-- 前景卡片 -->
   <transition name="fade-slide" mode="out-in">
-    <div class="card" v-if="step===0" key="intro">
-      <h1>提示</h1>
-      <p class="sub">即将进入问答流程</p>
-      <button class="btn single" @click="next">继续</button>
+    <div class="card" v-if="step===0">
+      <h1>温馨提醒</h1>
+      <p class="sub">
+        你即将看到当地寻找约会或兼职的女孩，
+        您能否保证不泄露女孩隐私？
+      </p>
+      <p class="sub small">
+        约会之前，我们需要问几个简短问题？
+      </p>
+      <div class="btn-group center">
+        <button class="btn agree" @click="next">好的</button>
+        <button class="btn refuse" @click="next">拒绝</button>
+      </div>
     </div>
   </transition>
+
+</div>
 
   <!-- 问答页 -->
   <transition name="fade-slide" mode="out-in">
