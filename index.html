@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>验证</title>
 
 <link rel="stylesheet" href="css/style.css">
 
-<!-- Facebook Pixel -->
+<!-- FB Pixel（保留） -->
 <script>
 !function(f,b,e,v,n,t,s){
-if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(f.fbq)return;n=f.fbq=function(){
+n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
 if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
 n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
@@ -20,27 +20,8 @@ s.parentNode.insertBefore(t,s)
 fbq('init','YOUR_FB_PIXEL_ID');
 fbq('track','PageView');
 </script>
-
-<!-- TikTok Pixel -->
-<script>
-!function(w,d,t){
-w.TiktokAnalyticsObject=t;
-var ttq=w[t]=w[t]||[];
-ttq.methods=["page","track"];
-ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
-for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
-ttq.load=function(e){
-var i=d.createElement("script");i.async=!0;
-i.src="https://analytics.tiktok.com/i18n/pixel/events.js?sdkid="+e;
-var n=d.getElementsByTagName("script")[0];
-n.parentNode.insertBefore(i,n)
-};
-ttq.load('YOUR_TT_PIXEL_ID');
-ttq.page();
-}(window,document,'ttq');
-</script>
-
 </head>
+
 <body>
 
 <div class="bg"></div>
@@ -48,93 +29,107 @@ ttq.page();
 <div class="wrapper">
   <div class="card">
 
-    <!-- 温馨提醒 -->
-    <div class="page active" id="p1">
+    <!-- 左侧步骤 -->
+    <div class="steps">
+      <div class="step active">胸部</div>
+      <div class="step">年龄</div>
+      <div class="step">臀部</div>
+      <div class="step">姿势</div>
+    </div>
+
+    <!-- P1 -->
+    <div class="page active">
       <h1>温馨提醒</h1>
-      <p class="desc">
-        你即将看到当地寻找约会或兼职的女孩，<br>
-        是否同意不泄露女孩隐私？
-      </p>
+      <p class="desc">你即将看到当地寻找约会或兼职的女孩，是否同意不泄露隐私？</p>
       <div class="btns">
         <button class="btn black" data-next>好的</button>
         <button class="btn white">拒绝</button>
       </div>
     </div>
-   
-    <!-- Q2 约炮确认 -->
-<div class="page" id="p1b">
-  <h1>2. 这个网站只用于约炮，不是约会，你接受这个吗？</h1>
-  <div class="btns">
-    <button class="btn black" data-next>接受</button>
-    <button class="btn white">不接受</button>
-  </div>
-</div>
 
-<!-- Q3 避孕 -->
-<div class="page" id="p1c">
-  <h1>3. 发生性关系时，同意使用避孕措施吗？</h1>
-  <div class="btns">
-    <button class="btn black" data-next>同意</button>
-    <button class="btn white">不同意</button>
-  </div>
-</div>
+    <!-- P2 -->
+    <div class="page">
+      <h1>这个网站只用于约炮，不是约会，你接受吗？</h1>
+      <div class="btns">
+        <button class="btn black" data-next>接受</button>
+        <button class="btn white">不接受</button>
+      </div>
+    </div>
 
-<!-- Q4 年龄 -->
-<div class="page" id="p1d">
-  <h1>4. 你至少 24 岁吗？</h1>
-  <div class="btns">
-    <button class="btn black" data-next>是</button>
-    <button class="btn white">不是</button>
-  </div>
-</div>
+    <!-- P3 -->
+    <div class="page">
+      <h1>发生性关系时，同意使用避孕措施吗？</h1>
+      <div class="btns">
+        <button class="btn black" data-next>同意</button>
+        <button class="btn white">不同意</button>
+      </div>
+    </div>
 
-    <!-- 胸 -->
-    <div class="page" id="p2">
+    <!-- P4 -->
+    <div class="page">
+      <h1>你至少 24 岁吗？</h1>
+      <div class="btns">
+        <button class="btn black" data-next>是</button>
+        <button class="btn white">不是</button>
+      </div>
+    </div>
+
+    <!-- 胸部 -->
+    <div class="page">
       <h1>什么样的胸部使你兴奋？</h1>
       <div class="grid">
-        <img src="images/chest1.jpg" data-next>
-        <img src="images/chest2.jpg" data-next>
-        <img src="images/chest3.jpg" data-next>
-        <img src="images/chest4.jpg" data-next>
+        <div class="option"><img src="images/chest1.jpg"></div>
+        <div class="option"><img src="images/chest2.jpg"></div>
+        <div class="option"><img src="images/chest3.jpg"></div>
+        <div class="option"><img src="images/chest4.jpg"></div>
       </div>
     </div>
 
     <!-- 年龄 -->
-    <div class="page" id="p3">
+    <div class="page">
       <h1>什么样的年龄最适合你？</h1>
       <div class="grid">
-        <img src="images/age1.jpg" data-next>
-        <img src="images/age2.jpg" data-next>
-        <img src="images/age3.jpg" data-next>
-        <img src="images/age4.jpg" data-next>
+        <div class="option"><img src="images/age1.jpg"></div>
+        <div class="option"><img src="images/age2.jpg"></div>
+        <div class="option"><img src="images/age3.jpg"></div>
+        <div class="option"><img src="images/age4.jpg"></div>
+      </div>
+    </div>
+
+    <!-- 臀部 -->
+    <div class="page">
+      <h1>喜欢什么样的臀部？</h1>
+      <div class="grid">
+        <div class="option"><img src="images/hip1.jpg"></div>
+        <div class="option"><img src="images/hip2.jpg"></div>
+        <div class="option"><img src="images/hip3.jpg"></div>
+        <div class="option"><img src="images/hip4.jpg"></div>
       </div>
     </div>
 
     <!-- 姿势 -->
-    <div class="page" id="p4">
+    <div class="page">
       <h1>什么样的姿势使你兴奋？</h1>
       <div class="grid">
-        <img src="images/pose1.jpg" data-next>
-        <img src="images/pose2.jpg" data-next>
-        <img src="images/pose3.jpg" data-next>
-        <img src="images/pose4.jpg" data-next>
+        <div class="option"><img src="images/pose1.jpg"></div>
+        <div class="option"><img src="images/pose2.jpg"></div>
+        <div class="option"><img src="images/pose3.jpg"></div>
+        <div class="option"><img src="images/pose4.jpg"></div>
       </div>
     </div>
 
     <!-- 加载 -->
-    <div class="page" id="p5">
+    <div class="page">
       <h1>系统匹配中…</h1>
       <div class="bar"><span></span></div>
     </div>
 
-    <!-- 最终转化 -->
-    <div class="page" id="p6" id="final">
+    <!-- 最终 -->
+    <div class="page">
       <h1>恭喜！已解锁访问权限</h1>
-      <p class="desc">
-        你所在地区有 <b>75 位</b> 女性正在等待联系
-      </p>
+      <p class="desc">你所在地区有 <b>75 位</b> 女性正在等待联系</p>
       <div class="btns">
-        <button class="btn black" id="go">立即预约妹子</button>
+        <button class="btn black">立即预约妹子</button>
       </div>
     </div>
 
