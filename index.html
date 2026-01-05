@@ -24,7 +24,7 @@
             <p class="desc">你即将看到当地寻找约会或兼职的女孩，<br>您是否同意不泄露女孩隐私？</p>
             <p class="sub-desc">约会之前，我们需要问几个简单问题</p>
             <div class="btns">
-                <button class="btn btn-black" data-next>好的</button>
+                <button class="btn btn-black" onclick="nextPage()">好的</button>
                 <button class="btn btn-white">拒绝</button>
             </div>
         </div>
@@ -32,7 +32,7 @@
         <div class="page">
             <h1>1. 你同意对女性的身份保密吗？</h1>
             <div class="btns">
-                <button class="btn btn-black" data-next>同意</button>
+                <button class="btn btn-black" onclick="nextPage()">同意</button>
                 <button class="btn btn-white">不同意</button>
             </div>
         </div>
@@ -40,7 +40,7 @@
         <div class="page">
             <h1>2. 这个网站只用于约炮，不是约会，你接受这个吗？</h1>
             <div class="btns">
-                <button class="btn btn-black" data-next>接受</button>
+                <button class="btn btn-black" onclick="nextPage()">接受</button>
                 <button class="btn btn-white">不接受</button>
             </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="page">
             <h1>3. 发生性关系时候，同意使用避孕套吗？</h1>
             <div class="btns">
-                <button class="btn btn-black" data-next>同意</button>
+                <button class="btn btn-black" onclick="nextPage()">同意</button>
                 <button class="btn btn-white">不同意</button>
             </div>
         </div>
@@ -56,7 +56,7 @@
         <div class="page">
             <h1>4. 你至少 24 岁吗？</h1>
             <div class="btns">
-                <button class="btn btn-black" id="btn-to-selection">是</button>
+                <button class="btn btn-black" onclick="startSelection()">是</button>
                 <button class="btn btn-white">不是</button>
             </div>
         </div>
@@ -64,44 +64,44 @@
         <div class="page" data-step="0">
             <h1>什么样的胸部使你兴奋？</h1>
             <div class="grid">
-                <div class="option"><img src="images/chest1.jpg"></div>
-                <div class="option"><img src="images/chest2.jpg"></div>
-                <div class="option"><img src="images/chest3.jpg"></div>
-                <div class="option"><img src="images/chest4.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/chest1.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/chest2.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/chest3.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/chest4.jpg"></div>
             </div>
         </div>
 
         <div class="page" data-step="1">
             <h1>什么样的年龄最适合你？</h1>
             <div class="grid">
-                <div class="option"><img src="images/age1.jpg"></div>
-                <div class="option"><img src="images/age2.jpg"></div>
-                <div class="option"><img src="images/age3.jpg"></div>
-                <div class="option"><img src="images/age4.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/age1.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/age2.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/age3.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/age4.jpg"></div>
             </div>
         </div>
 
         <div class="page" data-step="2">
             <h1>喜欢什么样的臀部？</h1>
             <div class="grid">
-                <div class="option"><img src="images/hip1.jpg"></div>
-                <div class="option"><img src="images/hip2.jpg"></div>
-                <div class="option"><img src="images/hip3.jpg"></div>
-                <div class="option"><img src="images/hip4.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/hip1.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/hip2.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/hip3.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/hip4.jpg"></div>
             </div>
         </div>
 
         <div class="page" data-step="3">
             <h1>什么样的姿势使你兴奋？</h1>
             <div class="grid">
-                <div class="option"><img src="images/pose1.gif"></div>
-                <div class="option"><img src="images/pose2.gif"></div>
-                <div class="option"><img src="images/pose3.gif"></div>
-                <div class="option"><img src="images/pose4.gif"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/pose1.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/pose2.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/pose3.jpg"></div>
+                <div class="option" onclick="selectOption(this)"><img src="images/pose4.jpg"></div>
             </div>
         </div>
 
-        <div class="page" id="loadingPage">
+        <div class="page">
             <h1>加载中...</h1>
             <div class="bar-container">
                 <div class="bar-fill" id="progressBar"></div>
@@ -110,11 +110,11 @@
 
         <div class="page">
             <h1 style="color:#ff3b30">恭喜！</h1>
-            <h3 style="margin-top:-10px; color:#333;">已授予访问权限！</h3>
+            <h3 style="margin-top:-10px">已授予访问权限！</h3>
             <div class="result-text">
-                <p><b>1.</b> 记住，这些女人只是想约炮，请保持尊重，不打扰女孩生活。</p>
-                <p><b>2.</b> 约会前请确认双方意愿，并在约定时间内到达地点。</p>
-                <p><b>3.</b> 隐私泄露或恶意行为将导致账号被永久封禁。</p>
+                <p>您现在将获取附近适龄女性的联系方式。准备好约会，您将使用它们！点击页面任何位置完成注册的过程。</p>
+                <p>1. 记住，这些女人只是想约炮，请保持尊重。</p>
+                <p>2. 如果您尝试恶意行为，您的账号将被永久封禁。</p>
             </div>
             <div class="btns" style="margin-top:30px">
                 <button class="btn btn-red">立即联系她们！</button>
