@@ -1,9 +1,29 @@
+/* 页面容器 */
 .page{
   position:relative;
   min-height:100vh;
-  background:url("../images/bg.jpg") center center / cover no-repeat;
+  overflow:hidden;
 }
 
+/* 背景滚动层 */
+.bg-scroll{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:200%;
+  background:url("../images/bg.jpg") center top / cover no-repeat;
+  animation:bgMove 20s linear infinite;
+  z-index:1;
+}
+
+/* 背景滚动动画 */
+@keyframes bgMove{
+  from{ transform:translateY(0); }
+  to{ transform:translateY(-50%); }
+}
+
+/* 前景卡片 */
 .card{
   position:absolute;
   top:6%;
@@ -19,9 +39,11 @@
   flex-direction:column;
   align-items:center;
   box-shadow:0 25px 50px rgba(0,0,0,.45);
+  z-index:3;
 }
 
-h1{
+/* 标题 */
+.card h1{
   color:#fff;
   font-size:18px;
   font-weight:500;
@@ -29,12 +51,15 @@ h1{
   text-align:center;
 }
 
+/* 副文案 */
 .sub{
   color:#fff;
   opacity:.9;
   margin-bottom:40px;
+  text-align:center;
 }
 
+/* 按钮组 */
 .btn-group{
   margin-top:auto;
   width:100%;
@@ -42,6 +67,7 @@ h1{
   gap:14px;
 }
 
+/* 按钮通用 */
 .btn{
   flex:1;
   height:44px;
@@ -52,22 +78,19 @@ h1{
   cursor:pointer;
 }
 
-.btn.single{
-  width:100%;
-  background:linear-gradient(135deg,#ff4d4d,#ff1f1f);
-  color:#fff;
-}
-
+/* 同意按钮 */
 .btn.agree{
   background:linear-gradient(135deg,#ff4d4d,#ff1f1f);
   color:#fff;
 }
 
+/* 拒绝按钮 */
 .btn.refuse{
   background:#fff;
   color:#333;
 }
 
+/* 进度条 */
 .progress{
   width:100%;
   height:8px;
@@ -76,7 +99,6 @@ h1{
   overflow:hidden;
   margin-top:30px;
 }
-
 .bar{
   height:100%;
   width:0;
@@ -84,7 +106,7 @@ h1{
   transition:width .2s linear;
 }
 
-/* 动画（原站感） */
+/* 卡片切换动画（原站感） */
 .fade-slide-enter-active,
 .fade-slide-leave-active{
   transition:all .25s ease;
@@ -92,6 +114,14 @@ h1{
 .fade-slide-enter-from{
   opacity:0;
   transform:translate(-50%,12px);
+}
+.fade-slide-enter-to{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+.fade-slide-leave-from{
+  opacity:1;
+  transform:translate(-50%,0);
 }
 .fade-slide-leave-to{
   opacity:0;
