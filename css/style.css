@@ -10,16 +10,18 @@
 html, body {
   width: 100%;
   height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
   overflow: hidden;
 }
 
-/* ===== 背景层 ===== */
+/* 背景图 */
 .bg {
   position: fixed;
   inset: 0;
-  background: url("../images/bg.jpg") center / cover no-repeat;
-  animation: bgMove 12s linear infinite;
-  z-index: 1;
+  background: url("../images/bg.jpg") center center / cover no-repeat;
+  filter: blur(0px);
+  z-index: -2;
 }
 
 @keyframes bgMove {
@@ -32,13 +34,12 @@ html, body {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(255,255,255,0.7);
 }
 
-/* ===== 外层容器 ===== */
+/* 页面容器 */
 .wrapper {
   position: relative;
-  z-index: 2;
   width: 100%;
   height: 100%;
   display: flex;
@@ -46,15 +47,15 @@ html, body {
   justify-content: center;
 }
 
-/* ===== 中央卡片 ===== */
+/* 卡片 */
 .card {
-  width: min(900px, 92vw);
-  height: min(560px, 86vh);
-  background: rgba(255,255,255,0.92);
+  width: 90%;
+  max-width: 900px;
+  min-height: 420px;
+  background: rgba(255,255,255,0.85);
   border-radius: 18px;
-  padding: 48px 40px;
-  position: relative;
-  overflow: hidden;
+  padding: 50px;
+  box-sizing: border-box;
 }
 
 /* ===== 页面步骤 ===== */
