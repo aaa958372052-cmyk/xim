@@ -190,3 +190,11 @@ h1 {
   color: #444;
   line-height: 1.8;
 }
+/* ===== 页面流程控制（必须放最后）===== */
+.page {
+  display: none !important;
+}
+
+.page.active {
+  display: block !important;
+}
