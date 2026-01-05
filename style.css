@@ -20,7 +20,7 @@ html, body {
 .bg-scroll {
   width: 414px;                 /* ✅ 原版 ≈ iPhone 宽 */
   height: 220%;                 /* 比 200% 稍大，防断层 */
-  background-image: url("../images/bg.jpg");
+  background: url("images/bg.jpg") center top / cover no-repeat;
   background-repeat: repeat-y;
   background-position: center top;
   background-size: cover;
