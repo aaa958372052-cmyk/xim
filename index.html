@@ -3,47 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>欢迎访问</title>
+<title>提示</title>
 
-<link rel="stylesheet" href="style/CN/s01/css/main.css">
-<link rel="stylesheet" href="style/CN/s01/css/style.css">
+<!-- Facebook Pixel（你自己换 ID） -->
+<script>
+!function(f,b,e,v,n,t,s){
+if(f.fbq)return;n=f.fbq=function(){
+n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','YOUR_PIXEL_ID');
+fbq('track','PageView');
+</script>
+
+<link rel="stylesheet" href="./style/CN/s01/css/main.css">
+<link rel="stylesheet" href="./style/CN/s01/css/style.css">
 </head>
 
 <body>
 
 <div id="app" class="page">
 
-  <div class="card" v-if="step===0">
-    <h1>提示</h1>
-    <p class="sub">即将进入问答流程</p>
-    <button class="btn main" @click="next">继续</button>
-  </div>
-
-  <div class="card" v-if="step>=1 && step<=4">
-  <h1>{{ questions[step-1] }}</h1>
-
-  <div class="btn-group">
-    <button class="btn agree" @click="next">同意</button>
-    <button class="btn refuse" @click="next">不同意</button>
-  </div>
-</div>
-
-  <div class="card" v-if="step===5">
-    <h1>加载中...</h1>
-    <div class="progress">
-      <div class="bar" :style="{width: progress+'%'}"></div>
+  <!-- 提示页 -->
+  <transition name="fade-slide" mode="out-in">
+    <div class="card" v-if="step===0" key="intro">
+      <h1>提示</h1>
+      <p class="sub">即将进入问答流程</p>
+      <button class="btn single" @click="next">继续</button>
     </div>
-  </div>
+  </transition>
 
-  <div class="card finish" v-if="step===6" @click="go">
-    <h1>完成</h1>
-    <p class="sub">点击继续</p>
-  </div>
+  <!-- 问答页 -->
+  <transition name="fade-slide" mode="out-in">
+    <div class="card" v-if="step>=1 && step<=4" :key="step">
+      <h1>{{ questions[step-1] }}</h1>
+      <div class="btn-group">
+        <button class="btn agree" @click="next">同意</button>
+        <button class="btn refuse" @click="next">不同意</button>
+      </div>
+    </div>
+  </transition>
+
+  <!-- 加载 -->
+  <transition name="fade-slide" mode="out-in">
+    <div class="card" v-if="step===5" key="loading">
+      <h1>加载中...</h1>
+      <div class="progress">
+        <div class="bar" :style="{width: progress + '%'}"></div>
+      </div>
+    </div>
+  </transition>
 
 </div>
+
 <!-- 防封跳转 -->
-<script src="c/sqsf.js"></script>
+<script src="./c/sqsf.js"></script>
+
+<!-- Vue -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
 <script>
 const { createApp } = Vue;
 
@@ -54,29 +75,33 @@ createApp({
       progress:0,
       questions:[
         '你是否同意继续？',
-        '你是否接受本站规则？',
-        '你是否年满 18 岁？',
-        '是否进入下一步？'
+        '是否已满 25 岁？',
+        '是否接受相关条款？',
+        '是否确认进入下一步？'
       ]
     }
   },
   methods:{
     next(){
       this.step++;
-      if(this.step===5) this.load();
+      if(this.step===5){
+        this.startLoading();
+      }
     },
-    load(){
-      this.progress=0;
-      const t=setInterval(()=>{
-        this.progress+=8;
+    startLoading(){
+      const t = setInterval(()=>{
+        this.progress += 8;
         if(this.progress>=100){
           clearInterval(t);
-          this.step=6;
+          this.go();
         }
-      },150);
+      },120);
     },
     go(){
-      alert('这里接跳转');
+      if(typeof fbq==='function'){
+        fbq('track','Lead');
+      }
+      location.href = window.SQSF_TARGET || '#';
     }
   }
 }).mount('#app');
