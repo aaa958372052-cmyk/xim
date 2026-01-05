@@ -1,5 +1,5 @@
 /* ======================
-   全局基础
+   全局
 ====================== */
 html, body {
   margin: 0;
@@ -8,95 +8,184 @@ html, body {
 }
 
 body {
-  min-height: 120vh; /* 🔴 原版关键 */
-
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
-
-  background-image: url("images/bg.jpg");
-  background-repeat: no-repeat;
-
-  /* 原版像素级定位 */
-  background-position: center -18px;
-  background-size: auto;
-
-  background-attachment: scroll;
-  background-color: #7b7b7b;
+  background: #7b7b7b; /* 原版灰底 */
+  overflow-x: hidden;
 }
 
 /* ======================
-   主容器
+   背景层（核心）
 ====================== */
-.inner-content {
+.bg-wrap {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1920px;              /* ⚠️ 原版是固定宽背景 */
+  height: 3000px;             /* ⚠️ 必须比页面高 */
+  z-index: -2;
+}
+
+.bg-img {
+  width: 100%;
+  height: 100%;
+  background-image: url("images/bg.jpg"); /* 你的背景图 */
+  background-repeat: no-repeat;
+  background-size: auto;      /* ❗不铺面 */
+  background-position: center top;
+}
+
+/* ❌ 原版没有模糊，这个留空 */
+.bg-mask {
+  display: none;
+}
+
+/* ======================
+   主体容器
+====================== */
+.wrapper {
+  position: relative;
   display: flex;
   justify-content: center;
-
-  padding-top: 132px;
+  padding-top: 132px;   /* 原版锁死 */
   padding-bottom: 220px;
-
-  /* 横向安全区（原版有） */
-  padding-left: 16px;
-  padding-right: 16px;
 }
 
 /* ======================
-   白色卡片
+   步骤条
 ====================== */
-.content {
+.steps-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 40px;
+  display: none;
+  gap: 24px;
+}
+
+.step {
+  font-size: 14px;
+  color: #999;
+}
+
+.step.active {
+  color: #000;
+  font-weight: 600;
+}
+
+/* ======================
+   卡片
+====================== */
+.card {
   width: 760px;
-  max-width: 100%;
-
-  background: #ffffff;
+  background: #fff;
   border-radius: 28px;
-
-  box-shadow: 0 38px 120px rgba(0, 0, 0, 0.38);
-
+  box-shadow: 0 38px 120px rgba(0,0,0,.38);
   padding: 52px 58px 64px;
-  min-height: 520px;
 }
 
 /* ======================
-   标题
+   页面切换
 ====================== */
-#steps h2 {
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* ======================
+   标题 / 文本
+====================== */
+h1 {
   text-align: center;
   font-size: 26px;
-  font-weight: 700;
-  color: #111;
+  margin-bottom: 20px;
+}
 
-  margin-top: 4px;
-  margin-bottom: 34px;
+.desc,
+.sub-desc {
+  text-align: center;
+  color: #555;
 }
 
 /* ======================
-   选项图片
+   按钮
 ====================== */
-.option-list {
+.btns {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.btn {
+  padding: 14px 34px;
+  border-radius: 999px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-black {
+  background: #000;
+  color: #fff;
+}
+
+.btn-white {
+  background: #fff;
+  color: #000;
+  border: 1px solid #ddd;
+}
+
+.btn-red {
+  background: #ff3b30;
+  color: #fff;
+}
+
+/* ======================
+   图片选项
+====================== */
+.grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 26px;
-
-  padding: 0 6px;
+  margin-top: 30px;
 }
 
-.option-list .image {
-  width: 100%;
-  height: 152px;
-
+.option {
   border-radius: 14px;
   overflow: hidden;
+  cursor: pointer;
+  border: 3px solid transparent;
 }
 
-.option-list img {
-  width: 100%;
-  height: 100%;
+.option.selected {
+  border-color: #ff3b30;
+}
 
+.option img {
+  width: 100%;
+  height: 152px;
   object-fit: cover;
   display: block;
 }
 
 /* ======================
-   滚动节奏补偿（原版有）
+   进度条
 ====================== */
-#steps {
-  padding-bottom: 140px;
+.bar-container {
+  height: 10px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.bar-fill {
+  width: 0%;
+  height: 100%;
+  background: #ff3b30;
+  transition: width 2.6s linear;
 }
