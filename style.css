@@ -14,30 +14,47 @@ body {
 }
 
 /* ======================
-   背景层（核心）
+   背景外层（固定视口）
 ====================== */
 .bg-wrap {
   position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 1920px;              /* ⚠️ 原版是固定宽背景 */
-  height: 3000px;             /* ⚠️ 必须比页面高 */
+  width: 1920px;        /* 原版固定宽 */
+  height: 100vh;        /* 视口高 */
+  overflow: hidden;
   z-index: -2;
 }
 
+/* ======================
+   背景长图（真正滚动的）
+====================== */
 .bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
-  background-image: url("images/bg.jpg"); /* 你的背景图 */
+  height: 3000px;       /* 🔴 必须是“长图高度” */
+  
+  background-image: url("images/bg.jpg");
   background-repeat: no-repeat;
-  background-size: auto;      /* ❗不铺面 */
+  background-size: auto;
   background-position: center top;
+
+  animation: bgScroll 30s linear infinite;
 }
 
-/* ❌ 原版没有模糊，这个留空 */
-.bg-mask {
-  display: none;
+/* ======================
+   从下往上循环滚动
+====================== */
+@keyframes bgScroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-1500px);
+  }
 }
 
 /* ======================
