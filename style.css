@@ -42,7 +42,7 @@ body {
   background-size: auto;
   background-position: center top;
 
-  animation: bgScroll 30s linear infinite;
+  animation: bgScroll 24s linear infinite;
 }
 
 /* ======================
