@@ -1,43 +1,25 @@
-let step = 0;
-const steps = document.querySelectorAll('.step');
-const bar = document.getElementById('bar');
+let step = 1;
 
-function show(i){
-  steps.forEach(s=>s.classList.remove('active'));
-  steps[i].classList.add('active');
-
-  if(window.fbq){
-    fbq('trackCustom','Step_'+i);
-  }
-}
+document.querySelectorAll('[data-next]').forEach(el=>{
+  el.addEventListener('click', next);
+});
 
 function next(){
+  document.getElementById('p'+step).classList.remove('active');
   step++;
-  show(step);
 
-  // 到加载页
-  if(step === 4){
-    if(window.fbq) fbq('trackCustom','StartMatch');
+  if(step <= 6){
+    document.getElementById('p'+step).classList.add('active');
 
-    let p = 0;
-    const t = setInterval(()=>{
-      p += 6;           // 👉 更快，贴近你视频
-      bar.style.width = p + '%';
-      if(p >= 100){
-        clearInterval(t);
-        step++;
-        show(step);
-      }
-    },50);
+    if(step === 6){
+      if(window.fbq) fbq('track','CompleteRegistration');
+      if(window.ttq) ttq.track('CompleteRegistration');
+    }
   }
 }
 
-function go(){
+document.getElementById('go')?.addEventListener('click', ()=>{
   if(window.fbq) fbq('track','Lead');
-
-  setTimeout(()=>{
-    window.location.href = "https://line.me/ti/p/XXXXXXX";
-  },300);
-}
-
-show(0);
+  if(window.ttq) ttq.track('Lead');
+  location.href = 'YOUR_TARGET_URL';
+});
