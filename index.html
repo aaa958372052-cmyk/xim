@@ -2,210 +2,99 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>测试</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>温馨提醒</title>
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI";
-}
+<link rel="stylesheet" href="style/CN/s01/css/main.css">
 
-/* ===== 页面容器 ===== */
-.page{
-  position:relative;
-  width:100%;
-  height:100vh;
-  overflow:hidden;
-  background:#000;
-}
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){
+if(f.fbq)return;n=f.fbq=function(){
+n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];
+t=b.createElement(e);t.async=!0;
+t.src=v;
+s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
 
-/* ===== 背景滚动图 ===== */
-.bg-scroll{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:220%;
-  background:url("images/bg.jpg") center top / cover no-repeat;
-  animation:bgMove 10s linear infinite;
-  z-index:1;
-}
-@keyframes bgMove{
-  from{transform:translateY(0)}
-  to{transform:translateY(-55%)}
-}
-
-/* ===== 黑色遮罩（原版有） ===== */
-.mask{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:2;
-}
-
-/* ===== 中央卡片 ===== */
-.card{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:78%;
-  max-width:720px;
-  height:82%;
-  background:rgba(245,245,245,.96);
-  border-radius:26px;
-  padding:44px 40px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  z-index:3;
-  box-shadow:0 30px 80px rgba(0,0,0,.45);
-}
-
-/* ===== 文本 ===== */
-h1{
-  font-size:28px;
-  font-weight:700;
-  margin-top:20px;
-}
-.sub{
-  margin-top:14px;
-  font-size:15px;
-  opacity:.65;
-}
-
-/* ===== 按钮 ===== */
-.btn-group{
-  margin-top:auto;
-  margin-bottom:30px;
-  display:flex;
-  gap:18px;
-}
-button{
-  min-width:140px;
-  height:44px;
-  border-radius:999px;
-  border:none;
-  font-size:15px;
-  font-weight:600;
-  cursor:pointer;
-}
-.btn-black{
-  background:#000;
-  color:#fff;
-}
-.btn-white{
-  background:#fff;
-  color:#000;
-  border:1px solid #ddd;
-}
-
-/* ===== 进出动画 ===== */
-.fade{
-  animation:fade .35s ease;
-}
-@keyframes fade{
-  from{opacity:0;transform:translate(-50%,-46%)}
-  to{opacity:1;transform:translate(-50%,-50%)}
-}
-</style>
+fbq('init','你的_PIXEL_ID');
+fbq('track','PageView');
+</script>
 </head>
 
 <body>
+<div id="app" class="page">
 
-<div class="page">
+  <!-- 背景滚动 -->
   <div class="bg-scroll"></div>
-  <div class="mask"></div>
 
-  <div class="card fade">
-    <h1>温馨提醒</h1>
-    <div class="sub">请认真回答以下问题</div>
+  <!-- 卡片 -->
+  <div class="card">
 
-    <div class="btn-group">
-      <button class="btn-black">好的</button>
-      <button class="btn-white">拒绝</button>
+    <!-- STEP 0 -->
+    <div class="step active">
+      <h1>温馨提醒</h1>
+      <p class="sub">请认真回答以下问题</p>
+      <div class="btn-group">
+        <button class="btn agree single" onclick="next()">好的</button>
+      </div>
     </div>
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <img src="style/CN/s01/images/q1.jpg" class="qimg">
+      <h2>你是否年满 18 周岁？</h2>
+      <div class="btn-group">
+        <button class="btn agree" onclick="next()">是</button>
+        <button class="btn refuse" onclick="next()">否</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <img src="style/CN/s01/images/q2.jpg" class="qimg">
+      <h2>你更喜欢哪种身材？</h2>
+      <div class="btn-group">
+        <button class="btn agree" onclick="next()">丰满</button>
+        <button class="btn refuse" onclick="next()">苗条</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <img src="style/CN/s01/images/q3.jpg" class="qimg">
+      <h2>你更偏好哪种姿势？</h2>
+      <div class="btn-group">
+        <button class="btn agree" onclick="next()">主动</button>
+        <button class="btn refuse" onclick="next()">被动</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <h2>正在为你匹配</h2>
+      <div class="progress">
+        <div id="bar" class="bar"></div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <h2>匹配完成</h2>
+      <p class="sub">点击继续查看</p>
+      <div class="btn-group">
+        <button class="btn agree single" onclick="go()">继续</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
-  if(step>=1 && step<=3){
-    const qs=[
-      "你同意对女性的身份保密吗？",
-      "本网站仅用于约会，你能接受吗？",
-      "发生关系时是否同意使用避孕措施？"
-    ];
-    card.innerHTML=`
-      <h1>${step}. ${qs[step-1]}</h1>
-      <div class="btn-group">
-        <button class="btn-red" onclick="next()">同意</button>
-        <button class="btn-white" onclick="next()">不同意</button>
-      </div>
-      <div class="progress"><div class="bar" style="width:${step*30}%"></div></div>
-    `;
-  }
-
-  if(step===4){
-    card.innerHTML=`
-      <h1>进入挑选环节</h1>
-      <p class="sub">系统分析中...</p>
-      <div class="progress"><div class="bar" style="width:55%"></div></div>
-    `;
-    setTimeout(()=>{step=5;render()},1200);
-  }
-
-  if(step===5){
-    card.innerHTML=`
-      <h1>什么样的胸部使你兴奋？</h1>
-      <div class="select-wrap">
-        <div class="left">
-          <div class="tab active">胸部</div>
-          <div class="tab">年龄</div>
-          <div class="tab">臀部</div>
-          <div class="tab">姿势</div>
-        </div>
-        <div class="right">
-          <div class="pic"><img src="images/c1.jpg"></div>
-          <div class="pic"><img src="images/c2.jpg"></div>
-          <div class="pic"><img src="images/c3.jpg"></div>
-          <div class="pic"><img src="images/c4.jpg"></div>
-        </div>
-      </div>
-      <div class="btn-group">
-        <button class="btn-red" onclick="next()">继续</button>
-      </div>
-    `;
-  }
-
-  if(step===6){
-    card.innerHTML=`
-      <h1>加载中...</h1>
-      <div class="progress"><div class="bar" style="width:70%"></div></div>
-    `;
-    setTimeout(()=>{step=7;render()},1400);
-  }
-
-  if(step===7){
-    card.innerHTML=`
-      <h1>恭喜！</h1>
-      <p class="sub">
-        您已获得访问权限<br><br>
-        点击下方按钮继续
-      </p>
-      <div class="btn-group">
-        <button class="btn-red">立即联系她们</button>
-      </div>
-    `;
-  }
-}
-
-function next(){
-  step++;
-  render();
-}
-render();
-</script>
+<script src="style/CN/s01/js/main.js"></script>
 </body>
 </html>
