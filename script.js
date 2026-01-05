@@ -3,42 +3,51 @@ const pages = document.querySelectorAll('.page');
 const steps = document.querySelectorAll('.step');
 const stepsBar = document.getElementById('stepsBar');
 
+function showPage(index) {
+    if (index < 0 || index >= pages.length) return;
+
+    pages.forEach(p => p.classList.remove('active'));
+    pages[index].classList.add('active');
+
+    const stepIdx = pages[index].dataset.step;
+    if (stepIdx !== undefined) {
+        steps.forEach(s => s.classList.remove('active'));
+        steps[stepIdx].classList.add('active');
+    }
+}
+
 function nextPage() {
-    pages[currentPage].classList.remove('active');
+    if (currentPage >= pages.length - 1) return;
     currentPage++;
-    pages[currentPage].classList.add('active');
+    showPage(currentPage);
 }
 
-// 点击 24 岁确认后，开始挑选并显示侧边栏
+// 24 岁确认 → 显示左侧步骤
 function startSelection() {
-    nextPage();
     stepsBar.style.display = 'flex';
+    nextPage();
 }
 
-// 处理图片选择
+// 图片选择
 function selectOption(el) {
-    const parent = el.parentElement;
-    parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    const group = el.parentElement;
+    group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
 
     setTimeout(() => {
-        pages[currentPage].classList.remove('active');
-        currentPage++;
-        pages[currentPage].classList.add('active');
+        nextPage();
 
-        const stepIdx = pages[currentPage].getAttribute('data-step');
-        if (stepIdx !== null) {
-            // 更新左侧步骤高亮
-            steps.forEach(s => s.classList.remove('active'));
-            steps[stepIdx].classList.add('active');
-        } else {
-            // 进入加载环节，隐藏侧边栏并启动进度条
-            stepsBar.style.display = 'none';
-            const bar = document.getElementById('progressBar');
-            if (bar) {
-                setTimeout(() => bar.style.width = '100%', 100);
-                setTimeout(() => nextPage(), 2700);
-            }
+        // 如果进入加载页
+        const bar = document.getElementById('progressBar');
+        if (bar) {
+            bar.style.width = '0%';
+            setTimeout(() => bar.style.width = '100%', 100);
+            setTimeout(() => nextPage(), 2800);
         }
-    }, 400);
+
+        // 加载后隐藏步骤条
+        if (!pages[currentPage].dataset.step) {
+            stepsBar.style.display = 'none';
+        }
+    }, 350);
 }
