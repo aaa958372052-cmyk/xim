@@ -60,41 +60,27 @@ body {
 ====================== */
 .steps-container {
   position: absolute;
-  top: 220px;               /* 对齐白卡中部 */
-  left: 50%;
-  transform: translateX(-50%);
-
+  left: -72px;              /* 🔴 关键：藏在卡片左边 */
+  top: 140px;               /* 对齐第一行图片高度 */
   display: flex;
   flex-direction: column;
   gap: 14px;
 
   opacity: 0;
+  transform: translateX(-30px);  /* 往左藏 */
+  transition: all 0.45s ease;
   pointer-events: none;
-
-  /* 初始在卡片左侧外 */
-  transform: translateX(-50%) translateX(-120px);
-
-  transition: 
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.4s ease;
-}
-
-/* 显示状态 */
-.steps-container.show {
-  opacity: 1;
-  pointer-events: auto;
-
-  /* 滑入到卡片左边 */
-  transform: translateX(-50%) translateX(-380px);
 }
 
 /* 单个 step 样式 */
 .step {
-  width: 72px;
-  height: 52px;
+  width: 68px;
+  height: 46px;
 
   background: #fff;
-  border-radius: 14px 0 0 14px;
+  border-radius: 16px 0 0 16px;
+  border: 1px solid #ddd;
+  border-right: none;
 
   display: flex;
   align-items: center;
@@ -103,20 +89,19 @@ body {
   font-size: 13px;
   color: #999;
 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
   transition: all 0.25s ease;
 }
 
-/* 高亮态 */
 .step.active {
+  width: 76px;
+  margin-left: -8px;
+
   color: #ff3b30;
   font-weight: 600;
 
-  width: 82px;
-  margin-left: -10px;
-
-  box-shadow: 0 10px 26px rgba(255,59,48,0.25);
+  border: 2px solid #ff3b30;
+  border-right: none;
 }
 
 /* ======================
