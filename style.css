@@ -56,10 +56,9 @@ body {
 ====================== */
 .wrapper {
   position: relative;
+  width: 100%;
   display: flex;
   justify-content: center;
-  padding-top: 132px;   /* 原版锁死 */
-  padding-bottom: 220px;
 }
 
 /* ======================
@@ -88,24 +87,25 @@ body {
    卡片
 ====================== */
 .card {
-  width: 860px;              /* ✅ 比之前更宽 */
-  max-width: calc(100% - 32px);
+  position: relative;
 
-  /* 原版：半透明白 */
-  background: rgba(255, 255, 255, 0.92);
+  /* 🔴 原版视觉中心宽度 */
+  width: 720px;
+  max-width: 92vw;
+
+  margin-top: 140px;   /* 原版不是居中，是“偏下居中” */
+  margin-bottom: 200px;
+
+  background: rgba(255,255,255,0.94); /* 原版是半透明 */
+  backdrop-filter: blur(2px);
 
   border-radius: 28px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.35);
 
-  /* 原版重阴影（重点） */
-  box-shadow:
-    0 40px 120px rgba(0, 0, 0, 0.45);
-
-  padding: 56px 64px 72px;
-
-  min-height: 520px;
-
-  /* 防止透明叠加发灰 */
-  backdrop-filter: none;
+  padding: 56px 60px 68px;
+}
+.card {
+  font-size: 18px;   /* 🔴 整体基准字 */
 }
 
 /* ======================
@@ -122,38 +122,32 @@ body {
 /* ======================
    标题 / 文本
 ====================== */
-.card h1 {
-  font-size: 28px;      /* 原版接近 28~30 */
-  font-weight: 700;
-  color: #111;
-  line-height: 1.25;
-  margin-bottom: 22px;
-}
-.desc {
-  font-size: 18px;      /* 原版正文 ≈ 18 */
-  line-height: 1.65;    /* 原版很松 */
-  color: #444;
-  margin-bottom: 28px;
-}
-.desc {
-  font-size: 18px;      /* 原版正文 ≈ 18 */
-  line-height: 1.65;    /* 原版很松 */
-  color: #444;
-  margin-bottom: 28px;
-}
 .page h1 {
-  font-size: 26px;
+  font-size: 30px;       /* 🔴 原版接近 30 */
   font-weight: 700;
-  margin-bottom: 34px;
+  line-height: 1.25;
+  color: #111;
+  margin-bottom: 26px;
 }
-
+.desc {
+  font-size: 20px;       /* 🔴 必须 ≥20 才像 */
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 30px;
+}
+.sub-desc {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #888;
+  margin-bottom: 36px;
+}
 /* ======================
    按钮
 ====================== */
 .btn {
-  font-size: 18px;        /* 原版按钮字很大 */
-  padding: 14px 36px;
-  border-radius: 32px;
+  font-size: 19px;
+  padding: 16px 42px;
+  border-radius: 34px;
 }
 
 .btn {
@@ -165,7 +159,7 @@ body {
 }
 
 .btn-black {
-  background: #111;      /* 原版不是纯黑 */
+  background: #111;
   color: #fff;
 }
 
