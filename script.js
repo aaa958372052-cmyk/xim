@@ -31,6 +31,7 @@ function startSelection() {
 
   // 显示 steps（滑入）
   const stepsBar = document.getElementById('stepsBar');
+  const steps = document.querySelectorAll('.step'); 
   stepsBar.classList.add('show');
 
   // 启动红条
