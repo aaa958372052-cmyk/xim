@@ -13,53 +13,44 @@ body {
   overflow-x: hidden;
 }
 
-/* ======================
-   背景外壳：只负责裁视口
-====================== */
+/* 背景容器 */
 .bg-wrap {
   position: fixed;
   inset: 0;
   overflow: hidden;
   z-index: -2;
-  background: #7b7b7b; /* 原版灰底 */
+  background: #7b7b7b;
 }
 
-/* ======================
-   滚动轨道：高度 = 两张图
-====================== */
+/* 运动轨道 */
 .bg-track {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   width: 1920px;
 
-  animation: bgMove 26s linear infinite;
+  animation: bgScroll 30s linear infinite;
 }
 
-/* ======================
-   单张完整背景（长图）
-====================== */
+/* 每一段背景（同一张图） */
 .bg-img {
   width: 100%;
-  height: 2600px;   /* 🔴 必须是你长图的真实高度 */
-  background-image: url("images/bg.jpg");
+  height: 26000px; /* 🔴 整张长图高度 */
+  background-image: url("images/bg-long.jpg");
   background-repeat: no-repeat;
-  background-size: auto;
   background-position: center top;
+  background-size: auto;
 }
 
-/* ======================
-   滚动动画（整张走完）
-====================== */
-@keyframes bgMove {
+/* 真·无缝循环 */
+@keyframes bgScroll {
   from {
     transform: translate(-50%, 0);
   }
   to {
-    transform: translate(-50%, -2600px);
+    transform: translate(-50%, -26000px);
   }
 }
-
 /* ======================
    主体容器
 ====================== */
