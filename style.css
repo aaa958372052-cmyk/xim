@@ -19,36 +19,36 @@ body {
   inset: 0;
   overflow: hidden;
   z-index: -2;
-  background: #7b7b7b;
 }
 
-/* 运动轨道 */
+/* 真正滚动的长图 */
 .bg-track {
   position: absolute;
   left: 50%;
+  top: 0;
+  width: 853px;
+  height: 25548px; /* 12774 × 2（必须复制一份） */
+
   transform: translateX(-50%);
-  width: 1920px;
-
-  animation: bgScroll 30s linear infinite;
-}
-
-/* 每一段背景（同一张图） */
-.bg-img {
-  width: 100%;
-  height: 26000px; /* 🔴 整张长图高度 */
-  background-image: url("images/bg-long.jpg");
+  background-image:
+    url("images/bg.jpg"),
+    url("images/bg.jpg");
   background-repeat: no-repeat;
-  background-position: center top;
-  background-size: auto;
+  background-position:
+    center top,
+    center 12774px;
+  background-size: 853px 12774px;
+
+  animation: bgScroll 80s linear infinite;
 }
 
-/* 真·无缝循环 */
+/* 核心动画 */
 @keyframes bgScroll {
   from {
     transform: translate(-50%, 0);
   }
   to {
-    transform: translate(-50%, -26000px);
+    transform: translate(-50%, -12774px);
   }
 }
 /* ======================
