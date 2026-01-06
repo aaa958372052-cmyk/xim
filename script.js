@@ -10,52 +10,66 @@ const stepsBar = document.getElementById('stepsBar');
 function nextPage() {
   pages[currentPage].classList.remove('active');
   currentPage++;
-  pages[currentPage].classList.add('active');
+  if (pages[currentPage]) {
+    pages[currentPage].classList.add('active');
+  }
 }
 
 /* ======================
-   进入图片选择阶段
+   进入图片选择前加载页
 ====================== */
 function startSelection() {
-  nextPage();
-  stepsBar.style.display = 'flex';
+  // 跳到加载页
+  pages[currentPage].classList.remove('active');
+  currentPage++;
+  pages[currentPage].classList.add('active');
 
-  // 默认高亮第一个
-  steps.forEach(s => s.classList.remove('active'));
-  steps[0].classList.add('active');
+  // 启动红色加载条
+  const bar = document.getElementById('progressBar');
+  if (bar) {
+    bar.style.width = '0%';
+    setTimeout(() => {
+      bar.style.width = '100%';
+    }, 80);
+  }
+
+  // 2.4 秒后进入第一张图片选择
+  setTimeout(() => {
+    pages[currentPage].classList.remove('active');
+    currentPage++;
+    pages[currentPage].classList.add('active');
+
+    stepsBar.style.display = 'flex';
+    steps.forEach(s => s.classList.remove('active'));
+    steps[0].classList.add('active');
+  }, 2400);
 }
 
 /* ======================
-   图片选择逻辑（原版节奏）
+   图片选择逻辑
 ====================== */
 function selectOption(el) {
   const parent = el.parentElement;
 
-  // 清掉同组
   parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-
-  // 选中当前
   el.classList.add('selected');
 
-  // 380ms 给用户看到红框 & 闪动
   setTimeout(() => {
     pages[currentPage].classList.remove('active');
     currentPage++;
 
-    // 如果是加载页
     if (!pages[currentPage]) return;
     pages[currentPage].classList.add('active');
 
     const stepIdx = pages[currentPage].getAttribute('data-step');
 
     if (stepIdx !== null) {
-      // 更新步骤条高亮
       steps.forEach(s => s.classList.remove('active'));
       if (steps[stepIdx]) {
         steps[stepIdx].classList.add('active');
       }
     } else {
-      // 进入加载页
+      // 进入最终加载页
       stepsBar.style.display = 'none';
 
       const bar = document.getElementById('progressBar');
@@ -65,7 +79,6 @@ function selectOption(el) {
           bar.style.width = '100%';
         }, 80);
 
-        // 2.6 秒后进最终页
         setTimeout(() => {
           nextPage();
         }, 2600);
@@ -75,7 +88,7 @@ function selectOption(el) {
 }
 
 /* ======================
-   防止刷新错位
+   初始化
 ====================== */
 document.addEventListener("DOMContentLoaded", () => {
   pages.forEach((p, i) => {
