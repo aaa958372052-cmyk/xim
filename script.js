@@ -18,39 +18,28 @@ function showPage(index) {
 /* ======================
    普通下一页
 ====================== */
-function nextPage() {
-  showPage(currentPage + 1);
-}
-
-/* ======================
-   进入挑选前加载页
-====================== */
 function startSelection() {
-  // 进入“进入挑选女孩环节”加载页
+  // 跳到“进入挑选女孩环节”加载页
   showPage(currentPage + 1);
 
+  // 红条动画
   const bar = document.getElementById('enterProgressBar');
-
   if (bar) {
     bar.style.width = '0%';
-
-    setTimeout(() => {
-      bar.style.width = '100%';
-    }, 60);
-
-    // 红条结束 → 进入胸部选择
-    setTimeout(() => {
-      showPage(currentPage + 1);
-
-      // 🔴 这里才让步骤条滑出
-      stepsBar.classList.add('show');
-
-      // 高亮第一项
-      steps.forEach(s => s.classList.remove('active'));
-      if (steps[0]) steps[0].classList.add('active');
-
-    }, 2600);
+    setTimeout(() => bar.style.width = '100%', 60);
   }
+
+  // 进度条结束 → 进入胸部选择 + 步骤条滑入
+  setTimeout(() => {
+    showPage(currentPage + 1);
+
+    const stepsBar = document.getElementById('stepsBar');
+    stepsBar.classList.add('show');   // 🔴 只有这里加 show
+
+    // 高亮第一项
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.step')[0].classList.add('active');
+  }, 2600);
 }
 
 /* ======================
