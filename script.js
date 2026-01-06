@@ -95,13 +95,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   stepsBar.classList.remove('show');
 });
+// 多个 TG 轮询池
+const tgList = [
+  "https://t.me/xiaoxiao58410",
+  "https://t.me/xiaoxiao58410",
+  "https://t.me/xiaoxiao58410",
+  "https://t.me/xiaoxiao58410"
+];
+
+// 轮询指针
+let tgIndex = 0;
+
 function tgJump() {
-  const tgApp = "tg://resolve?domain=你的用户名";
-  const tgWeb = "https://t.me/xiaoxiao58410";
+  // 取当前 TG
+  const url = tgList[tgIndex];
 
-  window.location.href = tgApp;
+  // 指针前进（到尾巴回到 0）
+  tgIndex++;
+  if (tgIndex >= tgList.length) {
+    tgIndex = 0;
+  }
 
-  setTimeout(() => {
-    window.location.href = tgWeb;
-  }, 500);
+  // 如果你有像素，可以加埋点
+  if (typeof fbq !== "undefined") {
+    fbq('track', 'Contact');
+    fbq('track', 'CompleteRegistration');
+  }
+
+  // 跳转
+  window.open(url, "_blank");
 }
