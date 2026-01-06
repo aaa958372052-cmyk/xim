@@ -59,29 +59,27 @@ body {
    步骤条
 ====================== */
 .card {
-  position: relative;
+  position: relative;   /* 🔴 必须有 */
 }
 
 /* 左侧步骤条 */
 .steps-container {
   position: absolute;
 
-  /* 🔴 从“卡片内左边缘”开始 */
-  left: 12px;
-  top: 110px;
+  left: 18px;        /* 距离卡片左内边缘 */
+  top: 110px;        /* 距离卡片顶部 */
 
   display: flex;
   flex-direction: column;
   gap: 14px;
 
   opacity: 0;
-  transform: translateX(-30px);
-  transition: all 0.4s ease;
+  transform: translateX(-40px);
+  transition: all 0.45s cubic-bezier(.4,0,.2,1);
 
   pointer-events: none;
-  z-index: 5;
+  z-index: 10;
 }
-
 /* 出现状态 */
 .steps-container.show {
   opacity: 1;
@@ -91,7 +89,7 @@ body {
 
 .step {
   width: 64px;
-  height: 48px;
+  height: 46px;
 
   background: #fff;
   border-radius: 14px;
@@ -103,12 +101,12 @@ body {
   font-size: 13px;
   color: #999;
 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
+
 .step.active {
   color: #ff3b30;
   font-weight: 600;
-  box-shadow: 0 12px 36px rgba(255,59,48,0.35);
 }
 
 /* ======================
@@ -131,8 +129,9 @@ body {
   text-align: center;
 }
 .card {
-  padding-left: 110px;   /* 🔴 给 steps 腾位置 */
+  padding-left: 120px;   /* 🔴 给 steps 腾空间 */
 }
+
 .desc, .sub-desc, .result-text, p {
   margin-left: auto;
   margin-right: auto;
