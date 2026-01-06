@@ -77,7 +77,6 @@ function selectOption(el) {
       if (steps[stepIdx]) steps[stepIdx].classList.add('active');
     } else {
       // 最终加载页
-      stepsBar.classList.remove('show');
       stepsBar.style.display = 'none';
 
       const bar = document.getElementById('progressBar');
