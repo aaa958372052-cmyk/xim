@@ -24,30 +24,37 @@ function nextPage() {
    进入挑选加载页
 ====================== */
 function startSelection() {
-  // 跳到“进入挑选女孩环节”加载页
-  showPage(currentPage + 1);
-
-  // 显示步骤条
-  stepsBar.style.display = 'flex';
+  // 先进入“进入挑选女孩环节”加载页
+  pages[currentPage].classList.remove('active');
+  currentPage++;
+  pages[currentPage].classList.add('active');
 
   // 启动红条
   const bar = document.getElementById('enterProgressBar');
-  if (!bar) return;
 
-  bar.style.width = '0%';
+  if (bar) {
+    bar.style.width = '0%';
 
-  setTimeout(() => {
-    bar.style.width = '100%';
-  }, 50);
+    setTimeout(() => {
+      bar.style.width = '100%';
+    }, 80);
 
-  // 红条走完 → 进入胸部选择页
-  setTimeout(() => {
-    showPage(currentPage + 1);
+    // 红条跑完 → 显示步骤条 + 进入胸部页
+    setTimeout(() => {
+      pages[currentPage].classList.remove('active');
+      currentPage++;
+      pages[currentPage].classList.add('active');
 
-    // 高亮第一个步骤
-    steps.forEach(s => s.classList.remove('active'));
-    if (steps[0]) steps[0].classList.add('active');
-  }, 2600);
+      // 🔴 关键：左侧步骤条滑入
+      const stepsBar = document.getElementById('stepsBar');
+      stepsBar.classList.add('show');
+
+      // 高亮第一个
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.step')[0].classList.add('active');
+
+    }, 2600);
+  }
 }
 
 /* ======================
