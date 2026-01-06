@@ -248,3 +248,56 @@ h1, h2, h3 {
   background: #f2f2f2;
   box-shadow: 0 0 0 6px rgba(0,0,0,0.08);
 }
+/* ======================
+   图片选中效果（原版感）
+====================== */
+.option {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+/* 默认无边框 */
+.option::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 3px solid transparent;
+  transition: border-color 0.18s ease;
+  pointer-events: none;
+}
+
+/* 悬浮轻微抬起 */
+.option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* 选中状态 */
+.option.selected::after {
+  border-color: #ff3b30;
+  box-shadow: 0 0 0 2px rgba(255,59,48,0.25);
+}
+
+/* 选中瞬间的“闪一下” */
+.option.selected {
+  animation: selectFlash 0.25s ease;
+}
+
+@keyframes selectFlash {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255,59,48,0.0);
+  }
+  50% {
+    transform: scale(0.97);
+    box-shadow: 0 0 0 6px rgba(255,59,48,0.18);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 2px rgba(255,59,48,0.25);
+  }
+}
