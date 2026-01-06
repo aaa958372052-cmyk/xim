@@ -64,20 +64,19 @@ body {
   left: 0;
 
   transform: translate(-110%, -50%);
+  opacity: 0;
+
   display: flex;
   flex-direction: column;
   gap: 18px;
 
-  opacity: 0;
-  pointer-events: none;
-
   transition: all 0.45s cubic-bezier(.4,0,.2,1);
 }
 
+/* 出现状态：贴在卡片内侧 */
 .steps-container.show {
-  transform: translate(-42px, -50%);
+  transform: translate(-24px, -50%);
   opacity: 1;
-  pointer-events: auto;
 }
 
 .step {
@@ -110,6 +109,9 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
+
+  position: relative;   /* 🔴 这一句必须有 */
+  padding-left: 120px;  /* 🔴 给 steps 腾空间 */
 }
 .desc, .sub-desc, .result-text, p {
   margin-left: auto;
