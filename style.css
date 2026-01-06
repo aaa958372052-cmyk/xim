@@ -106,8 +106,6 @@ body {
 
   /* 防止透明叠加发灰 */
   backdrop-filter: none;
-
-  font-size: 1.05em;
 }
 
 /* ======================
