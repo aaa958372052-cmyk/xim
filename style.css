@@ -65,7 +65,9 @@ body {
 /* 左侧步骤条 */
 .steps-container {
   position: absolute;
-  left: -86px;            /* 贴在卡片左侧外 */
+
+  /* 🔴 从“卡片内左边缘”开始 */
+  left: 12px;
   top: 110px;
 
   display: flex;
@@ -73,10 +75,11 @@ body {
   gap: 14px;
 
   opacity: 0;
-  transform: translateX(-20px);
+  transform: translateX(-30px);
   transition: all 0.4s ease;
 
   pointer-events: none;
+  z-index: 5;
 }
 
 /* 出现状态 */
@@ -87,11 +90,11 @@ body {
 }
 
 .step {
-  width: 72px;
+  width: 64px;
   height: 48px;
 
   background: #fff;
-  border-radius: 16px 0 0 16px;
+  border-radius: 14px;
 
   display: flex;
   align-items: center;
@@ -102,7 +105,6 @@ body {
 
   box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
-
 .step.active {
   color: #ff3b30;
   font-weight: 600;
@@ -127,6 +129,9 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+.card {
+  padding-left: 110px;   /* 🔴 给 steps 腾位置 */
 }
 .desc, .sub-desc, .result-text, p {
   margin-left: auto;
