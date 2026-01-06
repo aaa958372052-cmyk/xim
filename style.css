@@ -106,6 +106,8 @@ body {
 
   /* 防止透明叠加发灰 */
   backdrop-filter: none;
+
+  font-size: 1.05em;
 }
 
 /* ======================
@@ -122,26 +124,38 @@ body {
 /* ======================
    标题 / 文本
 ====================== */
-h1 {
-  text-align: center;
-  font-size: 26px;
-  margin-bottom: 20px;
+.card h1 {
+  font-size: 28px;      /* 原版接近 28~30 */
+  font-weight: 700;
+  color: #111;
+  line-height: 1.25;
+  margin-bottom: 22px;
 }
-
-.desc,
-.sub-desc {
-  text-align: center;
-  color: #555;
+.desc {
+  font-size: 18px;      /* 原版正文 ≈ 18 */
+  line-height: 1.65;    /* 原版很松 */
+  color: #444;
+  margin-bottom: 28px;
+}
+.desc {
+  font-size: 18px;      /* 原版正文 ≈ 18 */
+  line-height: 1.65;    /* 原版很松 */
+  color: #444;
+  margin-bottom: 28px;
+}
+.page h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 34px;
 }
 
 /* ======================
    按钮
 ====================== */
-.btns {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 32px;
+.btn {
+  font-size: 18px;        /* 原版按钮字很大 */
+  padding: 14px 36px;
+  border-radius: 32px;
 }
 
 .btn {
@@ -153,7 +167,7 @@ h1 {
 }
 
 .btn-black {
-  background: #000;
+  background: #111;      /* 原版不是纯黑 */
   color: #fff;
 }
 
