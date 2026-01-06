@@ -94,6 +94,7 @@ body {
 ====================== */
 .card {
   position: relative;
+  padding-left: 120px; 
   width: 720px;
   max-width: 92vw;
 
@@ -109,9 +110,6 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-
-  position: relative;   /* 🔴 这一句必须有 */
-  padding-left: 120px;  /* 🔴 给 steps 腾空间 */
 }
 .desc, .sub-desc, .result-text, p {
   margin-left: auto;
