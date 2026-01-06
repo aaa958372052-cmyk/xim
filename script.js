@@ -5,12 +5,14 @@ const steps = document.querySelectorAll('.step');
 const stepsBar = document.getElementById('stepsBar');
 
 /* ======================
-   基础翻页
+   页面切换核心
 ====================== */
 function showPage(index) {
   pages.forEach(p => p.classList.remove('active'));
-  if (pages[index]) pages[index].classList.add('active');
-  currentPage = index;
+  if (pages[index]) {
+    pages[index].classList.add('active');
+    currentPage = index;
+  }
 }
 
 /* ======================
@@ -21,17 +23,13 @@ function nextPage() {
 }
 
 /* ======================
-   进入挑选加载页
+   进入挑选前加载页
 ====================== */
 function startSelection() {
-  // 先进入“进入挑选女孩环节”加载页
-  pages[currentPage].classList.remove('active');
-  currentPage++;
-  pages[currentPage].classList.add('active');
+  // 进入“进入挑选女孩环节”加载页
+  showPage(currentPage + 1);
 
-  // 显示 steps（滑入）
-  const stepsBar = document.getElementById('stepsBar');
-  const steps = document.querySelectorAll('.step'); 
+  // 步骤条滑入
   stepsBar.classList.add('show');
 
   // 启动红条
@@ -42,17 +40,15 @@ function startSelection() {
 
     setTimeout(() => {
       bar.style.width = '100%';
-    }, 80);
+    }, 60);
 
-    // 进度条结束 → 进入胸部选择
+    // 红条结束 → 进入胸部选择
     setTimeout(() => {
-      pages[currentPage].classList.remove('active');
-      currentPage++;
-      pages[currentPage].classList.add('active');
+      showPage(currentPage + 1);
 
       // 高亮第一项
-      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.step')[0].classList.add('active');
+      steps.forEach(s => s.classList.remove('active'));
+      if (steps[0]) steps[0].classList.add('active');
 
     }, 2600);
   }
@@ -70,19 +66,19 @@ function selectOption(el) {
   setTimeout(() => {
     showPage(currentPage + 1);
 
-    const stepIdx = pages[currentPage].getAttribute('data-step');
+    const stepIdx = pages[currentPage]?.getAttribute('data-step');
 
-    if (stepIdx !== null) {
+    if (stepIdx !== null && stepIdx !== undefined) {
       steps.forEach(s => s.classList.remove('active'));
       if (steps[stepIdx]) steps[stepIdx].classList.add('active');
     } else {
       // 最终加载页
-      stepsBar.style.display = 'none';
+      stepsBar.classList.remove('show');
 
       const bar = document.getElementById('progressBar');
       if (bar) {
         bar.style.width = '0%';
-        setTimeout(() => bar.style.width = '100%', 50);
+        setTimeout(() => bar.style.width = '100%', 60);
         setTimeout(() => showPage(currentPage + 1), 2600);
       }
     }
@@ -98,5 +94,5 @@ document.addEventListener("DOMContentLoaded", () => {
     else p.classList.remove('active');
   });
 
-  stepsBar.style.display = 'none';
+  stepsBar.classList.remove('show');
 });
