@@ -221,3 +221,30 @@ h1, h2, h3 {
   background: #ff3b30;
   transition: width 2.6s linear;
 }
+/* ======================
+   按钮点击反馈效果
+====================== */
+.btn {
+  transition: all 0.15s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+}
+
+.btn:active {
+  transform: scale(0.96);
+  filter: brightness(0.95);
+}
+
+/* 黑按钮点击闪感 */
+.btn-black:active {
+  background: #000;
+  box-shadow: 0 0 0 6px rgba(0,0,0,0.08);
+}
+
+/* 白按钮点击闪感 */
+.btn-white:active {
+  background: #f2f2f2;
+  box-shadow: 0 0 0 6px rgba(0,0,0,0.08);
+}
