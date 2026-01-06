@@ -19,30 +19,35 @@ function nextPage() {
    进入图片选择前加载页
 ====================== */
 function startSelection() {
-  // 跳到加载页
+  // 先跳到“进入挑选加载页”
   pages[currentPage].classList.remove('active');
   currentPage++;
   pages[currentPage].classList.add('active');
 
-  // 启动红色加载条
-  const bar = document.getElementById('progressBar');
+  // 显示步骤条
+  stepsBar.style.display = 'flex';
+
+  // 启动红条动画
+  const bar = document.getElementById('enterProgressBar');
+
   if (bar) {
     bar.style.width = '0%';
+
     setTimeout(() => {
       bar.style.width = '100%';
     }, 80);
+
+    // 进度条走完后，跳到第一组图片
+    setTimeout(() => {
+      pages[currentPage].classList.remove('active');
+      currentPage++;
+      pages[currentPage].classList.add('active');
+
+      // 高亮第一个 step
+      steps.forEach(s => s.classList.remove('active'));
+      steps[0].classList.add('active');
+    }, 2600);
   }
-
-  // 2.4 秒后进入第一张图片选择
-  setTimeout(() => {
-    pages[currentPage].classList.remove('active');
-    currentPage++;
-    pages[currentPage].classList.add('active');
-
-    stepsBar.style.display = 'flex';
-    steps.forEach(s => s.classList.remove('active'));
-    steps[0].classList.add('active');
-  }, 2400);
 }
 
 /* ======================
