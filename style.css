@@ -299,3 +299,20 @@ h1, h2, h3 {
   border-radius: 999px;
   transition: width 2.4s linear;
 }
+/* 强制主内容在最上层 */
+.wrapper {
+  position: relative;
+  z-index: 100;
+}
+
+.card {
+  position: relative;
+  z-index: 200;
+}
+
+/* 步骤条在最上层 */
+.steps-container {
+  position: absolute;
+  z-index: 300;
+  pointer-events: auto;
+}
