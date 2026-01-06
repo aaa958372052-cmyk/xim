@@ -33,7 +33,7 @@ body {
 
   background-image: url("images/bg.jpg"), url("images/bg.jpg");
   background-repeat: no-repeat;
-  background-position: top center, top 12774px center;
+  background-position: center top, center 12774px;
   background-size: 853px 12774px;
 
   animation: bgScroll 80s linear infinite;
@@ -58,39 +58,26 @@ body {
 /* ======================
    步骤条
 ====================== */
-  /* 卡片本体 */
-.card {
-  position: relative;   /* 锁定参考点 */
-  width: 720px;
-  max-width: 92vw;
-  margin: 140px auto 200px;
-
-  background: rgba(255,255,255,0.94);
-  border-radius: 28px;
-  box-shadow: 0 40px 120px rgba(0,0,0,0.35);
-
-  padding: 56px 60px 68px;
-}
-
-/* 步骤条 */
 .steps-container {
   position: absolute;
   top: 50%;
   left: 0;
 
-  transform: translate(-120%, -50%); /* 初始完全藏在左边 */
+  transform: translate(-110%, -50%);
   display: flex;
   flex-direction: column;
   gap: 18px;
 
   opacity: 0;
-  transition: all 0.45s ease;
+  pointer-events: none;
+
+  transition: all 0.45s cubic-bezier(.4,0,.2,1);
 }
 
-/* 出现状态 */
 .steps-container.show {
-  transform: translate(-48px, -50%);  /* 贴着卡片内边缘 */
+  transform: translate(-42px, -50%);
   opacity: 1;
+  pointer-events: auto;
 }
 
 .step {
@@ -103,17 +90,18 @@ body {
   color: #000;
   font-weight: 600;
 }
-
 /* ======================
-   卡片
+   卡片本体（唯一版本）
 ====================== */
 .card {
+  position: relative;
   width: 720px;
   max-width: 92vw;
 
-  background: rgba(255,255,255,0.92);
-  border-radius: 28px;
+  margin: 0 auto;
 
+  background: rgba(255,255,255,0.94);
+  border-radius: 28px;
   box-shadow: 0 40px 120px rgba(0,0,0,0.35);
 
   padding: 56px 60px 68px;
@@ -123,10 +111,6 @@ body {
   align-items: center;
   text-align: center;
 }
-.card {
-  padding-left: 120px;   /* 🔴 给 steps 腾空间 */
-}
-
 .desc, .sub-desc, .result-text, p {
   margin-left: auto;
   margin-right: auto;
