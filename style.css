@@ -9,11 +9,13 @@ html, body {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
-  background: #7b7b7b; /* 原版灰底 */
+  background: #7b7b7b;
   overflow-x: hidden;
 }
 
-/* 背景容器 */
+/* ======================
+   背景滚动长图
+====================== */
 .bg-wrap {
   position: fixed;
   inset: 0;
@@ -21,15 +23,13 @@ body {
   z-index: -2;
 }
 
-/* 真正滚动的长图 */
 .bg-track {
   position: absolute;
   left: 50%;
   top: 0;
   width: 853px;
   height: 25548px;
-
-  margin-left: -426.5px; /* 853 / 2 精准居中 */
+  margin-left: -426.5px;
 
   background-image: url("images/bg.jpg"), url("images/bg.jpg");
   background-repeat: no-repeat;
@@ -43,6 +43,7 @@ body {
   from { top: 0; }
   to   { top: -12774px; }
 }
+
 /* ======================
    主体容器
 ====================== */
@@ -56,22 +57,48 @@ body {
 }
 
 /* ======================
-   步骤条
+   卡片本体
 ====================== */
 .card {
-  position: relative;   /* 锁定参照 */
-  padding-left: 120px;  /* 给步骤条让位 */
+  position: relative;
+  width: 720px;
+  max-width: 92vw;
+
+  background: rgba(255,255,255,0.94);
+  border-radius: 28px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.35);
+
+  padding: 56px 60px 68px 120px; /* 左边给步骤条留空间 */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
+/* ======================
+   步骤条（卡片内左侧滑入）
+====================== */
 .steps-container {
   position: absolute;
   left: 0;
   top: 50%;
-  transform: translate(-110%, -50%); /* 初始藏在左边 */
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  transform: translate(-120%, -50%);
+  opacity: 0;
+
+  transition: all 0.45s ease;
+  pointer-events: none;
 }
 
 .steps-container.show {
-  transform: translate(-24px, -50%); /* 滑到卡片内侧 */
+  transform: translate(24px, -50%);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .step {
@@ -84,37 +111,7 @@ body {
   color: #000;
   font-weight: 600;
 }
-/* ======================
-   卡片本体（唯一版本）
-====================== */
-.card {
-  position: relative;
-  width: 720px;
-  max-width: 92vw;
 
-  margin: 0 auto;
-
-  background: rgba(255,255,255,0.94);
-  border-radius: 28px;
-  box-shadow: 0 40px 120px rgba(0,0,0,0.35);
-
-  padding: 56px 60px 68px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.desc, .sub-desc, .result-text, p {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 520px;   /* 🔴 关键：控制行宽，像原版 */
-}
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 /* ======================
    页面切换
 ====================== */
@@ -132,41 +129,52 @@ body {
 h1, h2, h3 {
   text-align: center;
 }
+
 .page h1 {
-  font-size: 30px;       /* 🔴 原版接近 30 */
+  font-size: 30px;
   font-weight: 700;
   line-height: 1.25;
   color: #111;
   margin-bottom: 26px;
 }
+
 .desc {
-  font-size: 20px;       /* 🔴 必须 ≥20 才像 */
+  font-size: 20px;
   line-height: 1.7;
   color: #444;
   margin-bottom: 30px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .sub-desc {
   font-size: 16px;
   line-height: 1.6;
   color: #888;
   margin-bottom: 36px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+.result-text, p {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ======================
    按钮
 ====================== */
 .btn {
-  font-size: 19px;
-  padding: 16px 42px;
-  border-radius: 34px;
-}
-
-.btn {
-  padding: 18px 46px;     /* 更厚更大 */
+  padding: 18px 46px;
   border-radius: 999px;
-  font-size: 19px;        /* 🔴 关键 */
-  font-weight: 600;       /* 增加力量感 */
+  font-size: 19px;
+  font-weight: 600;
   cursor: pointer;
   border: none;
+  transition: all 0.15s ease;
 }
 
 .btn-black {
@@ -185,6 +193,26 @@ h1, h2, h3 {
   color: #fff;
 }
 
+/* 点击反馈 */
+.btn:hover {
+  filter: brightness(1.05);
+}
+
+.btn:active {
+  transform: scale(0.96);
+  filter: brightness(0.95);
+}
+
+.btn-black:active {
+  background: #000;
+  box-shadow: 0 0 0 6px rgba(0,0,0,0.08);
+}
+
+.btn-white:active {
+  background: #f2f2f2;
+  box-shadow: 0 0 0 6px rgba(0,0,0,0.08);
+}
+
 /* ======================
    图片选项
 ====================== */
@@ -196,14 +224,11 @@ h1, h2, h3 {
 }
 
 .option {
+  position: relative;
   border-radius: 14px;
   overflow: hidden;
   cursor: pointer;
-  border: 3px solid transparent;
-}
-
-.option.selected {
-  border-color: #ff3b30;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .option img {
@@ -213,64 +238,7 @@ h1, h2, h3 {
   display: block;
 }
 
-/* ======================
-   进度条（红条）
-====================== */
-.bar-container {
-  width: 100%;
-  height: 12px;
-  background: #e5e5e5;
-  border-radius: 999px;
-  overflow: hidden;
-  margin-top: 36px;
-}
-
-.bar-fill {
-  width: 0%;
-  height: 100%;
-  background: #ff3b30;
-  border-radius: 999px;
-  transition: width 2.4s linear;
-}
-/* ======================
-   按钮点击反馈效果
-====================== */
-.btn {
-  transition: all 0.15s ease;
-}
-
-.btn:hover {
-  filter: brightness(1.05);
-}
-
-.btn:active {
-  transform: scale(0.96);
-  filter: brightness(0.95);
-}
-
-/* 黑按钮点击闪感 */
-.btn-black:active {
-  background: #000;
-  box-shadow: 0 0 0 6px rgba(0,0,0,0.08);
-}
-
-/* 白按钮点击闪感 */
-.btn-white:active {
-  background: #f2f2f2;
-  box-shadow: 0 0 0 6px rgba(0,0,0,0.08);
-}
-/* ======================
-   图片选中效果（原版感）
-====================== */
-.option {
-  position: relative;
-  border-radius: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-/* 默认无边框 */
+/* 默认边框 */
 .option::after {
   content: "";
   position: absolute;
@@ -281,19 +249,18 @@ h1, h2, h3 {
   pointer-events: none;
 }
 
-/* 悬浮轻微抬起 */
+/* 悬浮 */
 .option:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
-/* 选中状态 */
+/* 选中 */
 .option.selected::after {
   border-color: #ff3b30;
   box-shadow: 0 0 0 2px rgba(255,59,48,0.25);
 }
 
-/* 选中瞬间的“闪一下” */
 .option.selected {
   animation: selectFlash 0.25s ease;
 }
@@ -311,4 +278,24 @@ h1, h2, h3 {
     transform: scale(1);
     box-shadow: 0 0 0 2px rgba(255,59,48,0.25);
   }
+}
+
+/* ======================
+   进度条
+====================== */
+.bar-container {
+  width: 100%;
+  height: 12px;
+  background: #e5e5e5;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 36px;
+}
+
+.bar-fill {
+  width: 0%;
+  height: 100%;
+  background: #ff3b30;
+  border-radius: 999px;
+  transition: width 2.4s linear;
 }
