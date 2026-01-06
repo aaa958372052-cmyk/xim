@@ -29,10 +29,6 @@ function startSelection() {
   // 进入“进入挑选女孩环节”加载页
   showPage(currentPage + 1);
 
-  // 步骤条滑入
-  stepsBar.classList.add('show');
-
-  // 启动红条
   const bar = document.getElementById('enterProgressBar');
 
   if (bar) {
@@ -45,6 +41,9 @@ function startSelection() {
     // 红条结束 → 进入胸部选择
     setTimeout(() => {
       showPage(currentPage + 1);
+
+      // 🔴 这里才让步骤条滑出
+      stepsBar.classList.add('show');
 
       // 高亮第一项
       steps.forEach(s => s.classList.remove('active'));
