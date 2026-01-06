@@ -59,55 +59,39 @@ body {
    步骤条
 ====================== */
 .card {
-  position: relative;   /* 🔴 必须有 */
+  position: relative;   /* 没这个 = 永远对不齐 */
 }
 
-/* 左侧步骤条 */
+/* 步骤条本体 */
 .steps-container {
   position: absolute;
-
-  left: 18px;        /* 距离卡片左内边缘 */
-  top: 110px;        /* 距离卡片顶部 */
-
+  top: 50%;
+  left: 0;
+  transform: translate(-100%, -50%); /* 初始藏在左边 */
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 
+  padding-right: 14px;
   opacity: 0;
-  transform: translateX(-40px);
-  transition: all 0.45s cubic-bezier(.4,0,.2,1);
-
-  pointer-events: none;
-  z-index: 10;
+  transition: all 0.45s ease;
 }
-/* 出现状态 */
+
+/* 显示状态 */
 .steps-container.show {
+  transform: translate(-40px, -50%);  /* 滑进到卡片内边缘 */
   opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
 }
 
 .step {
-  width: 64px;
-  height: 46px;
-
-  background: #fff;
-  border-radius: 14px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 13px;
-  color: #999;
-
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  font-size: 14px;
+  color: #aaa;
+  white-space: nowrap;
 }
 
 .step.active {
-  color: #ff3b30;
+  color: #000;
   font-weight: 600;
-}
 
 /* ======================
    卡片
