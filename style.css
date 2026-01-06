@@ -14,57 +14,49 @@ body {
 }
 
 /* ======================
-   背景容器（固定在视口）
+   背景外壳：只负责裁视口
 ====================== */
 .bg-wrap {
   position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1920px;     /* 原版就是固定宽 */
-  height: 100vh;
+  inset: 0;
   overflow: hidden;
   z-index: -2;
+  background: #7b7b7b; /* 原版灰底 */
 }
 
 /* ======================
-   单张背景（两张一模一样）
+   滚动轨道：高度 = 两张图
+====================== */
+.bg-track {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1920px;
+
+  animation: bgMove 26s linear infinite;
+}
+
+/* ======================
+   单张完整背景（长图）
 ====================== */
 .bg-img {
-  position: absolute;
-  left: 0;
   width: 100%;
-  height: 2000px;    /* 🔴 必须 = 你的背景图真实高度 */
+  height: 2600px;   /* 🔴 必须是你长图的真实高度 */
   background-image: url("images/bg.jpg");
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center top;
 }
 
-/* 第一张 */
-.bg1 {
-  top: 0;
-}
-
-/* 第二张，接在第一张下面 */
-.bg2 {
-  top: 2000px;
-}
-
 /* ======================
-   滚动动画（重点）
+   滚动动画（整张走完）
 ====================== */
-.bg-wrap {
-  animation: bgMove 22s linear infinite;
-}
-
-/* 从 0 滚到 -一张图的高度 */
 @keyframes bgMove {
   from {
-    transform: translateX(-50%) translateY(0);
+    transform: translate(-50%, 0);
   }
   to {
-    transform: translateX(-50%) translateY(-2000px);
+    transform: translate(-50%, -2600px);
   }
 }
 
