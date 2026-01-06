@@ -95,3 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   stepsBar.classList.remove('show');
 });
+function tgJump() {
+  const tgApp = "tg://resolve?domain=你的用户名";
+  const tgWeb = "https://t.me/xiaoxiao58410";
+
+  window.location.href = tgApp;
+
+  setTimeout(() => {
+    window.location.href = tgWeb;
+  }, 500);
+}
