@@ -1,41 +1,26 @@
-let currentPage = 0;
-const pages = document.querySelectorAll('.page');
-const steps = document.querySelectorAll('.step');
-const stepsBar = document.getElementById('stepsBar');
-
-function showPage(i){
-  pages.forEach(p=>p.classList.remove('active'));
-  pages[i].classList.add('active');
-}
-
-function nextPage(){
+function startSelection() {
+  // 隐藏当前页（24岁问题）
+  pages[currentPage].classList.remove('active');
   currentPage++;
-  showPage(currentPage);
-}
 
-function startSelection(){
-  nextPage();
-  stepsBar.style.display = 'flex';
-}
+  // 显示加载页
+  pages[currentPage].classList.add('active');
 
-function selectOption(el){
-  el.parentElement.querySelectorAll('.option')
-    .forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
+  const bar = document.getElementById('enterProgress');
+  bar.style.width = '0%';
 
-  setTimeout(()=>{
+  // 开始加载动画
+  setTimeout(() => {
+    bar.style.width = '100%';
+  }, 100);
+
+  // 2.6 秒后进入第一张图选择
+  setTimeout(() => {
+    pages[currentPage].classList.remove('active');
     currentPage++;
-    showPage(currentPage);
+    pages[currentPage].classList.add('active');
 
-    const step = pages[currentPage].dataset.step;
-    if(step!==undefined){
-      steps.forEach(s=>s.classList.remove('active'));
-      steps[step].classList.add('active');
-    }else{
-      stepsBar.style.display='none';
-      const bar=document.getElementById('progressBar');
-      bar.style.width='100%';
-      setTimeout(()=>nextPage(),2600);
-    }
-  },400);
+    // 显示步骤条
+    stepsBar.style.display = 'flex';
+  }, 2600);
 }
