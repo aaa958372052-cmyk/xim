@@ -29,35 +29,32 @@ function startSelection() {
   currentPage++;
   pages[currentPage].classList.add('active');
 
+  // 显示 steps（滑入）
+  const stepsBar = document.getElementById('stepsBar');
+  stepsBar.classList.add('show');
+
   // 启动红条
   const bar = document.getElementById('enterProgressBar');
+
   if (bar) {
     bar.style.width = '0%';
+
     setTimeout(() => {
       bar.style.width = '100%';
     }, 80);
-  }
 
-  // 进度条跑完 → 进入胸部选择 + 步骤条滑出
-  setTimeout(() => {
-    pages[currentPage].classList.remove('active');
-    currentPage++;
-    pages[currentPage].classList.add('active');
-
-    // 🔴 显示步骤条 + 滑入
-    stepsBar.style.display = 'flex';
-    stepsBar.style.pointerEvents = 'auto';
-
+    // 进度条结束 → 进入胸部选择
     setTimeout(() => {
-      stepsBar.style.opacity = '1';
-      stepsBar.style.transform = 'translateX(0)';
-    }, 30);
+      pages[currentPage].classList.remove('active');
+      currentPage++;
+      pages[currentPage].classList.add('active');
 
-    // 高亮第一个
-    steps.forEach(s => s.classList.remove('active'));
-    steps[0].classList.add('active');
+      // 高亮第一项
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.step')[0].classList.add('active');
 
-  }, 2600);
+    }, 2600);
+  }
 }
 
 /* ======================
