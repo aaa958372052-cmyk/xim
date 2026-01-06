@@ -7,47 +7,47 @@ const stepsBar = document.getElementById('stepsBar');
 /* ======================
    基础翻页
 ====================== */
-function nextPage() {
-  pages[currentPage].classList.remove('active');
-  currentPage++;
-  if (pages[currentPage]) {
-    pages[currentPage].classList.add('active');
-  }
+function showPage(index) {
+  pages.forEach(p => p.classList.remove('active'));
+  if (pages[index]) pages[index].classList.add('active');
+  currentPage = index;
 }
 
 /* ======================
-   进入图片选择前加载页
+   普通下一页
+====================== */
+function nextPage() {
+  showPage(currentPage + 1);
+}
+
+/* ======================
+   进入挑选加载页
 ====================== */
 function startSelection() {
-  // 先跳到“进入挑选加载页”
-  pages[currentPage].classList.remove('active');
-  currentPage++;
-  pages[currentPage].classList.add('active');
+  // 跳到“进入挑选女孩环节”加载页
+  showPage(currentPage + 1);
 
   // 显示步骤条
   stepsBar.style.display = 'flex';
 
-  // 启动红条动画
+  // 启动红条
   const bar = document.getElementById('enterProgressBar');
+  if (!bar) return;
 
-  if (bar) {
-    bar.style.width = '0%';
+  bar.style.width = '0%';
 
-    setTimeout(() => {
-      bar.style.width = '100%';
-    }, 80);
+  setTimeout(() => {
+    bar.style.width = '100%';
+  }, 50);
 
-    // 进度条走完后，跳到第一组图片
-    setTimeout(() => {
-      pages[currentPage].classList.remove('active');
-      currentPage++;
-      pages[currentPage].classList.add('active');
+  // 红条走完 → 进入胸部选择页
+  setTimeout(() => {
+    showPage(currentPage + 1);
 
-      // 高亮第一个 step
-      steps.forEach(s => s.classList.remove('active'));
-      steps[0].classList.add('active');
-    }, 2600);
-  }
+    // 高亮第一个步骤
+    steps.forEach(s => s.classList.remove('active'));
+    if (steps[0]) steps[0].classList.add('active');
+  }, 2600);
 }
 
 /* ======================
@@ -60,36 +60,25 @@ function selectOption(el) {
   el.classList.add('selected');
 
   setTimeout(() => {
-    pages[currentPage].classList.remove('active');
-    currentPage++;
-
-    if (!pages[currentPage]) return;
-    pages[currentPage].classList.add('active');
+    showPage(currentPage + 1);
 
     const stepIdx = pages[currentPage].getAttribute('data-step');
 
     if (stepIdx !== null) {
       steps.forEach(s => s.classList.remove('active'));
-      if (steps[stepIdx]) {
-        steps[stepIdx].classList.add('active');
-      }
+      if (steps[stepIdx]) steps[stepIdx].classList.add('active');
     } else {
-      // 进入最终加载页
+      // 最终加载页
       stepsBar.style.display = 'none';
 
       const bar = document.getElementById('progressBar');
       if (bar) {
         bar.style.width = '0%';
-        setTimeout(() => {
-          bar.style.width = '100%';
-        }, 80);
-
-        setTimeout(() => {
-          nextPage();
-        }, 2600);
+        setTimeout(() => bar.style.width = '100%', 50);
+        setTimeout(() => showPage(currentPage + 1), 2600);
       }
     }
-  }, 380);
+  }, 350);
 }
 
 /* ======================
