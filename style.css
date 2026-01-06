@@ -27,29 +27,21 @@ body {
   left: 50%;
   top: 0;
   width: 853px;
-  height: 25548px; /* 12774 × 2（必须复制一份） */
+  height: 25548px;
 
-  transform: translateX(-50%);
-  background-image:
-    url("images/bg.jpg"),
-    url("images/bg.jpg");
+  margin-left: -426.5px; /* 853 / 2 精准居中 */
+
+  background-image: url("images/bg.jpg"), url("images/bg.jpg");
   background-repeat: no-repeat;
-  background-position:
-    center top,
-    center 12774px;
+  background-position: top center, top 12774px center;
   background-size: 853px 12774px;
 
   animation: bgScroll 80s linear infinite;
 }
 
-/* 核心动画 */
 @keyframes bgScroll {
-  from {
-    transform: translate(-50%, 0);
-  }
-  to {
-    transform: translate(-50%, -12774px);
-  }
+  from { top: 0; }
+  to   { top: -12774px; }
 }
 /* ======================
    主体容器
@@ -59,6 +51,8 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-top: 140px;
+  padding-bottom: 200px;
 }
 
 /* ======================
@@ -87,27 +81,31 @@ body {
    卡片
 ====================== */
 .card {
-  position: relative;
-
-  /* 🔴 原版视觉中心宽度 */
   width: 720px;
   max-width: 92vw;
 
-  margin-top: 140px;   /* 原版不是居中，是“偏下居中” */
-  margin-bottom: 200px;
-
-  background: rgba(255,255,255,0.94); /* 原版是半透明 */
-  backdrop-filter: blur(2px);
-
+  background: rgba(255,255,255,0.92);
   border-radius: 28px;
+
   box-shadow: 0 40px 120px rgba(0,0,0,0.35);
 
   padding: 56px 60px 68px;
-}
-.card {
-  font-size: 18px;   /* 🔴 整体基准字 */
-}
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.desc, .sub-desc, .result-text, p {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 520px;   /* 🔴 关键：控制行宽，像原版 */
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 /* ======================
    页面切换
 ====================== */
@@ -122,6 +120,9 @@ body {
 /* ======================
    标题 / 文本
 ====================== */
+h1, h2, h3 {
+  text-align: center;
+}
 .page h1 {
   font-size: 30px;       /* 🔴 原版接近 30 */
   font-weight: 700;
